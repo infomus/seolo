@@ -49,9 +49,9 @@ export default function App() {
             <MainDashboard />
           </ProtectedRoutes>
 
-          <ProtectedDashboard user={user} path={ROUTES.DASHBOARD}>
+          <ProtectedRoutes user={user} path={ROUTES.DASHBOARD}>
             <Dashboard />
-          </ProtectedDashboard>
+          </ProtectedRoutes>
 
         </Switch>
       </Router>
