@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+.navbar {
+  box-shadow: 0px 4px 4px rgb(0 0 0 / 10%);
+  color: #000;
+  padding: 0;
+}
+
+nav {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media screen and (max-width:600px) and (max-width:1000px) {
+
+  .navbar {
+    padding: 10px;
+  }
+  nav {
+    width: 100%;
+  }
+
+  .loginButton {
+    flex-direction: column;
+  }
+
+  .signout-component {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav ul {
+    padding: 0;
+  }
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0 30px;
+}
+
+ul a {
+  text-decoration: none;
+}
+
+ul li a img {
+  width: 75px;
+  height: auto;
+}
+
+.navbar__login {
+  font-size: 16px;
+  max-height: 60px;
+  cursor: pointer;
+  line-height: 30px;
+  font-weight: 600;
+  font-family: "Roboto", sans-serif;
+}
+
+.loginContainer {
+  margin-right: 20px;
+}
+
+.signout-component {
+  display: flex;
+}
+
+.loginButton {
+  display: flex;
+  align-items: center;
+}
+
+.loginButton > a {
+  border-radius: 10px;
+  padding: 5px 40px;
+  color: white;
+  font-weight: 400;
+  background: linear-gradient(90.27deg, #ffc42d 0.24%, #ff2121 99.79%);
+}
+
+.loginButton > a:hover {
+  background-color: rgb(245, 23, 103);
+  color: white;
+}
+
+.signout-component button {
+  background-color: transparent;
+  border: none;
+  transition: 0.3s all linear;
+  margin-left: 20px;
+}
+
+.signout-component button:hover {
+  border-bottom: red;
+  border-radius: 20px;
+}
+
+.signout-component button li {
+  color: red;
+}
+
+.home__content > a {
+  text-decoration: none;
+}

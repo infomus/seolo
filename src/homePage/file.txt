@@ -1,0 +1,37 @@
+        {/* <div className="main__introduction">
+          {jumboData.map((item, id) => (
+            <div className="home__introduction" key={item.id}>
+              <div
+                className="home__introduction__header__two"
+                style={{
+                  marginLeft: `${item.left}`,
+                  marginRight: `${item.right}`,
+                }}
+              >
+                <h2>{item.title}</h2>
+                <p>{item.subtitle}</p>
+              </div>
+            </div>
+          ))}
+        </div> */}
+        {/* <div className="popular__books">
+          <div className="popular__inner__container">
+            <h2>Valuable Books</h2>
+          </div>
+
+          <div className="popular__inner__container popular__books__container">
+            {BooksData.map((item, id) => (
+            <Tilt
+              className="Tilt"
+              options={{ max: 25 }}
+              style={{ height: 250, width: 250 }}
+            >
+                <div>
+                  <img src={item.src} alt={item.alt} />
+                </div>
+            </Tilt>
+              ))}
+          </div>
+        <button onClick = {this.triggerAddTripState}>Click me</button>
+        {this.state.isEmptyState && <div>Hey there</div>}
+        </div> */}

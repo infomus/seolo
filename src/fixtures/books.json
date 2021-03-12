@@ -1,0 +1,37 @@
+[
+    {
+        "id":"1",
+        "src":"https://images-na.ssl-images-amazon.com/images/I/71Wn4rAriKL.jpg",
+        "alt":"books",
+        "title":"As a man Thinketh",
+        "srcs":"https://www.amazon.ca/As-Man-Thinketh-Original-Attraction/dp/1539398226/ref=pd_lpo_14_img_0/133-7389542-4959707?_encoding=UTF8&pd_rd_i=1539398226&pd_rd_r=d283634c-dc15-4119-bbf9-67a7c2a09615&pd_rd_w=Z79A7&pd_rd_wg=V2QkS&pf_rd_p=76d05b53-3ce3-4aa0-b17a-d40d7056440a&pf_rd_r=0QPVNXGB50GZYTZ6P7AE&psc=1&refRID=0QPVNXGB50GZYTZ6P7AE"
+    },
+    {
+        "id":"2",
+        "src":"https://images-na.ssl-images-amazon.com/images/I/91pR9wKJ3zL.jpg",
+        "alt":"books",
+        "title":"Atomic Habits",
+        "srcs":"https://www.amazon.ca/Atomic-Habits-Proven-Build-Break/dp/0735211299/ref=sr_1_1?crid=30FD7IER4XOSL&dchild=1&keywords=atomic+habits&qid=1614828624&s=books&sprefix=A%2Cstripbooks%2C337&sr=1-1"
+    },
+    {
+        "id":"3",
+        "src":"https://m.media-amazon.com/images/I/51E53HCUKVL.jpg",
+        "alt":"books",
+        "title":"Six Easy Pieces",
+        "srcs":"https://www.amazon.ca/Six-Easy-Pieces-Essentials-Explained/dp/0465025277/ref=sr_1_1?crid=15ZJPJM04SEAV&dchild=1&keywords=six+easy+pieces&qid=1614828640&s=books&sprefix=six+eas%2Cstripbooks%2C207&sr=1-1"
+    },
+    {
+        "id":"4",
+        "src":"https://images-na.ssl-images-amazon.com/images/I/51XvGXbMBtL._SX331_BO1,204,203,200_.jpg",
+        "alt":"books",
+        "title":"From Poverty to Power",
+        "srcs":"https://www.amazon.ca/Poverty-Power-Realization-Prosperity-Peace/dp/1544623666/ref=sr_1_1?crid=3BK0BY5JD87AX&dchild=1&keywords=from+poverty+to+power&qid=1614828656&sprefix=from+pover%2Cstripbooks%2C159&sr=8-1"
+    },
+    {
+        "id":"5",
+        "src":"https://images-na.ssl-images-amazon.com/images/I/413tqlJBxqL._SX317_BO1,204,203,200_.jpg",
+        "alt":"books",
+        "title":"Mindset",
+        "srcs":"https://www.amazon.ca/Mindset-Psychology-Carol-S-Dweck/dp/0345472322/ref=sr_1_1?dchild=1&keywords=mindset&qid=1614828670&sr=8-1"
+    }
+]

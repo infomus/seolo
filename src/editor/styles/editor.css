@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap");
+
+.ql-editor {
+  background-color: white;
+}
+
+.ql-editor > h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  font-family: "Nunito", sans-serif;
+}
+
+.ql-editor p,
+blockquote,
+s,
+u,
+li {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Nunito", sans-serif;
+}
+
+.ql-blank > p {
+  font-size: 18px;
+}
+.editorContainer {
+  height: "100%";
+  box-sizing: "border-box";
+  display: "flex";
+}
+
+.ql-snow .ql-editor img {
+    width: 50% !important;
+}
+
+.toggleButton > button {
+  height: 60px !important;
+}
+

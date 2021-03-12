@@ -1,0 +1,302 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito&family=Poppins:wght@300;400&display=swap");
+
+.sidebar {
+  display: flex;
+  padding: 2%;
+}
+.left-sidebar-image img {
+  width: 200px;
+  border-radius: 50%;
+}
+
+.left-sidebar {
+  display: flex;
+  flex: 0.2;
+  flex-direction: column;
+  text-align: center;
+  margin-right: 80px;
+}
+
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 0.8;
+}
+
+.right-sidebar-top-column {
+  width: 90%;
+  height: 5em;
+  background-color: #90ddf0;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.right-sidebar-editor {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sidebar-title {
+  font-size: 2em;
+  font-weight: 600;
+  margin-bottom: 20px;
+  width: 80%;
+  border-bottom: 1px solid whitesmoke;
+  width: 95%;
+  padding-left: 2%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 10px;
+  margin-top: 4%;
+}
+
+.right-sidebar-editor-title {
+  font-size: 1.5em;
+}
+
+.inline-editor {
+  font-weight: 600;
+}
+
+.editor-button button {
+  background: transparent;
+  background-color: white;
+  color: black;
+  border: none;
+  width: 100%;
+  border-radius: 999px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.1s all linear;
+  font-family: "Nunito", sans-serif;
+  outline: none;
+}
+
+.editor-button button:hover {
+  opacity: 0.8;
+}
+
+.right-sidebar-bottom-column {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.right-sidebar-bottom-column {
+  display: flex;
+  width: 95%;
+  justify-content: flex-start;
+  border-top: 2px solid rgba(245, 245, 245, 1);
+  border-left: 2px solid rgba(245, 245, 245, 1);
+  border-right: 2px solid rgba(245, 245, 245, 1);
+  box-shadow: 1px 0 20px rgb(0 0 0 / 8%);
+  padding: 1.125em;
+}
+
+.right-sidebar-documents {
+  background: white;
+  width: 100%;
+  min-height: 70px;
+  border-radius: 20px;
+  margin: 10px;
+  transition: 0.2s all linear;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.sidebars {
+  position: sticky;
+  flex: 0.2;
+  border-radius: 10px;
+  text-align: center;
+  height: fit-content;
+  margin: 0 15px;
+}
+
+.sidebars__avatar {
+  margin-bottom: 10px;
+}
+
+.sidebars__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-bottom: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: white;
+  padding-bottom: 10px;
+}
+
+.sidebars__top > h4 {
+  color: gray;
+  font-size: 12px;
+  margin: 0;
+}
+
+.sidebars__top > h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.documents-inner {
+  margin-top: 20px;
+  max-height: 50px;
+  overflow: hidden;
+}
+
+.document-title {
+  word-wrap: break-word;
+  width: fit-content;
+  font-size: 18px;
+  margin-left: 50px;
+  font-family: "Poppins";
+}
+
+.sidebars__top > img {
+  margin-bottom: -20px;
+  width: 100%;
+  height: 60px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.sidebar__stat {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar__stats {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid lightgray;
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.sidebar__stat > p {
+  color: gray;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sidebar__statsNumber {
+  font-weight: bold;
+  color: #0a66c2 !important;
+}
+
+
+.generator {
+  display: flex;
+  justify-content: center;
+  width: 91%;
+  padding-top: 20px;
+  background-color: yellow;
+  border-radius: 10px;
+
+}
+.introduction {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.text_button {
+  display: flex;
+  flex-direction: column;
+}
+
+.generator > .text_button > .generator__prompts {
+  font-size: 17px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 20px;
+}
+
+.generator > .text_button > button {
+  display: flex;
+  align-items: center;
+  flex: 0.2;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #efabff;
+  margin-left: 10px;
+  outline: none;
+  transition: 0.3s all linear;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: "Poppin", sans-serif;
+  color: white;
+  justify-content: center;
+  padding: 10px;
+}
+
+.MuiSvgIcon-root {
+  margin-right: 10px;
+  margin-left: 20px;
+}
+
+.generator > .text_button > button:hover {
+  opacity: 0.9;
+}
+
+.editor-button {
+  width: 100%;
+  background: #efabff;
+}
+
+.Journal__header {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.8;
+  margin: 10px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+@media screen and (max-width: 600px) and (max-width: 1000px) {
+  .sidebar {
+    flex-direction: column;
+    width: 90%;
+    justify-content: center;
+    margin-left: 10px;
+  }
+
+  .sidebar-title {
+    width: 90%;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .right-sidebar {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .right-sidebar-bottom-column {
+    width: 90%;
+  }
+
+  .editor-button {
+    width: 100%;
+  }
+
+  .right-sidebar-bottom-column {
+    box-shadow: none;
+    border-radius: 10px;
+  }
+
+  .generator {
+    width: 93.7%;
+  }
+}
+

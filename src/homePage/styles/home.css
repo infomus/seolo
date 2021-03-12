@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600:wgh@20&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
+
+
+.home__content {
+  width: 60%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+}
+
+canvas {
+  background-color: #FFE9E9;
+
+}
+
+.home__header {
+  font-family: "Nunito";
+  font-weight: 800;
+  font-size: 3.125em;
+  line-height: 68.2px;
+  color: black;
+}
+
+.home__header__home {
+  color: white;
+}
+
+.home__paragraph {
+  font-size: 22px;
+  font-family: "Roboto";
+  font-weight: 200;
+  line-height: 47px;
+  margin-top: 2%;
+}
+
+.learn {
+  color: #372772;
+  font-weight: 400;
+  font-size: 24px;
+  margin-top: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.home__horizontal {
+  width: 90%;
+  height: 2px;
+  background-color: whitesmoke;
+  border: none;
+}
+
+.learn > .MuiSvgIcon-root {
+  padding-top: 7px;
+  margin-left: 10px;
+}
+
+@media screen and (max-width:600px) and (max-width:1000px) {
+  .home__content {
+    width: 100%;
+  }
+
+  .home__header {
+    font-size: 2em;
+    padding: 10px;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+
+  .home__paragraph {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
