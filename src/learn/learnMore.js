@@ -55,7 +55,7 @@ class LearnMore extends React.Component {
 
             <Content
               title="Authentication & Protection"
-              description="Privacy and protection is a vital aspect in every business. Journaly has a two-step authentication process to secure your work behind steel doors. All your writing is hidden away and only you can access it. Even if you forgot to log out, an additional log in is required to get to your journals."
+              description="Privacy and protection is a vital aspect in everyone's life. This is why Journaly has a two-step authentication process to secure your work behind steel doors. All your writing is hidden away and only you can access it. Even if you forgot to log out, an additional log in is required to get to your journals."
             />
 
             <Content
