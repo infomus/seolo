@@ -61,7 +61,7 @@ export default function MainDashboard() {
     event.preventDefault();
 
       // ask them for a  4 digit number and then save it in a state and have them use that as a code to enter the journal application
-        if (password == user.password) {
+        if (email == user.email) {
           history.push("/DASHBOARD");
 
         } else {
@@ -93,7 +93,7 @@ export default function MainDashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -177,12 +177,12 @@ export default function MainDashboard() {
                   margin="normal"
                   required
                   fullWidth
-                  id="password"
-                  label="Password"
-                  name="password"
-                  type="password"
+                  id="email"
+                  label="email"
+                  name="email"
+                  type="email"
                   autoFocus
-                  onChange={({ target }) => setPassword(target.value)}
+                  onChange={({ target }) => setEmail(target.value)}
                 />
 
                 <Button
