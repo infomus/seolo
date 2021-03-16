@@ -26,7 +26,7 @@ function Navbar() {
       <nav className="navbar__navigation">
         <ul className="navbar__unordered">
           <li className="navbar__lists">
-            <Link exact to="/Home">
+            <Link exact to="/">
               <img src={logo} alt="" />
             </Link>
           </li>
