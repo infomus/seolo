@@ -60,8 +60,8 @@ export default function MainDashboard() {
   const handleSignIn = (event) => {
     event.preventDefault();
 
-
-        if (id == user.uid) {
+      // ask them for a  4 digit number and then save it in a state and have them use that as a code to enter the journal application
+        if (password == user.password) {
           history.push("/DASHBOARD");
 
         } else {
@@ -177,12 +177,12 @@ export default function MainDashboard() {
                   margin="normal"
                   required
                   fullWidth
-                  id="id"
-                  label="ID"
-                  name="id"
-                  type="id"
+                  id="password"
+                  label="Password"
+                  name="password"
+                  type="password"
                   autoFocus
-                  onChange={({ target }) => setId(target.value)}
+                  onChange={({ target }) => setPassword(target.value)}
                 />
 
                 <Button
