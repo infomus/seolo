@@ -96,7 +96,7 @@ class EditorComponent extends React.Component {
             onChange={(e) => this.updateTitle(e.target.value)}
           ></input>
         <div className = 'toggleButton'>
-          <ButtonDispatch />
+          {/* <ButtonDispatch /> */}
         </div>
         </div>
         <div className={classes.editorContainer}>
