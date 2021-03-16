@@ -60,7 +60,8 @@ export default function MainDashboard() {
   const handleSignIn = (event) => {
     event.preventDefault();
 
-        if(emailAddress == user.email) {
+
+        if (id == user.uid) {
           history.push("/DASHBOARD");
 
         } else {
@@ -91,7 +92,7 @@ export default function MainDashboard() {
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [emailAddress, setEmailAddress] = useState("");
+  const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
   const handleOpen = () => {
@@ -176,28 +177,12 @@ export default function MainDashboard() {
                   margin="normal"
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  type="email"
+                  id="id"
+                  label="ID"
+                  name="id"
+                  type="id"
                   autoFocus
-                  onChange={({ target }) => setEmailAddress(target.value)}
-                />
-
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  autoComplete="off"
-                  type="password"
-                  id="password"
-                  type="password"
-                  onChange={({ target }) => setPassword(target.value)}
-                  autoComplete="current-password"
+                  onChange={({ target }) => setId(target.value)}
                 />
 
                 <Button

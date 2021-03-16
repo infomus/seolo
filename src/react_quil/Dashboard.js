@@ -63,6 +63,7 @@ class Dashboard extends React.Component {
               // we created a constant called notes which is going to be our array. docs basically houses all the notes. For each _doc
               const data = _doc.data(); // we want to create a const called data and we return the data
               data["id"] = _doc.id;
+              console.log('data',_doc.id)
               const timestamp = data["timestamp"]
               return data; // we return data
             });
@@ -72,16 +73,6 @@ class Dashboard extends React.Component {
                 selectedNote: this.state.notes[0],
               });
             }
-
-            // const newID = newFromDB.id;
-            // this.setState({ notes: [] });
-            // const newNoteIndex = this.state.notes.indexOf(
-            //   this.state.notes.filter((_note) => _note.id === newID)[0]
-            // );
-            // this.setState({
-            //   selectedNote: this.state.notes[newNoteIndex],
-            //   selectedNoteIndex: newNoteIndex,
-            // });
           });
       } else {
         console.log("cant find user");
@@ -101,6 +92,9 @@ class Dashboard extends React.Component {
         body: noteObj.body,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
+
+
+      console.log('Updated form',db.collection("users").doc(firebase.auth().currentUser.uid).collection("notes").doc(id))
   };
 
   newNote = async (title) => {
@@ -114,7 +108,9 @@ class Dashboard extends React.Component {
       .collection("notes")
       .add({
         title: note.title,
-        body: note.body
+        body: note.body,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp() // This server time stamp is a problem to why the notes were not added.
+
       });
     const newID = newFromDB.id;
     await this.setState({ notes: [...this.state.notes, note] });
@@ -125,6 +121,7 @@ class Dashboard extends React.Component {
       selectedNote: this.state.notes[newNoteIndex],
       selectedNoteIndex: newNoteIndex,
     });
+
   };
 
   deleteNote = async (note) => {

@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import * as ROUTES from "../constants/routes";
 
-import jumboData from "../fixtures/jumbo.json";
-import BooksData from "../fixtures/books.json";
 
 import ParticlesBg from 'particles-bg'
 

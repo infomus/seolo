@@ -6,7 +6,6 @@ export default function Docs({title, timestamp}) {
                 <div className="documents-inner">
                   <div className="document-title">{title}</div>
                   <div className="document id">
-                      {console.log(timestamp)}
                   </div>
                 </div>
               </div>
