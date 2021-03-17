@@ -20,9 +20,11 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 
-import JumboData from '../fixtures/jumbo.json'
+import JumboData from "../fixtures/jumbo.json";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -46,27 +48,22 @@ export default function MainDashboard() {
   const { firebase } = useContext(FirebaseContext);
   const history = useHistory();
 
-
   const handleClick = () => {
-    const values = Object.values(JumboData)
+    const values = Object.values(JumboData);
     const randomValue = values[parseInt(Math.random() * values.length)];
-    
-    setRandom(randomValue)
 
+    setRandom(randomValue);
   };
-
-
 
   const handleSignIn = (event) => {
     event.preventDefault();
 
-      // ask them for a  4 digit number and then save it in a state and have them use that as a code to enter the journal application
-        if (email == user.email) {
-          history.push("/DASHBOARD");
-
-        } else {
-          alert('Please use same credentials')
-        }
+    // ask them for a  4 digit number and then save it in a state and have them use that as a code to enter the journal application
+    if (email == user.email) {
+      history.push("/DASHBOARD");
+    } else {
+      alert("Please use same credentials");
+    }
   };
 
   useMemo(() => {
@@ -94,6 +91,7 @@ export default function MainDashboard() {
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
+  const [hour, setHour] = useState(null)
 
   const handleOpen = () => {
     setOpen(true);
@@ -103,9 +101,22 @@ export default function MainDashboard() {
     setOpen(false);
   };
 
+  const getHour = () => {
+    const date = new Date();
+    const hour = date.getHours()
+    setHour({hour})
+
+    console.log(hour)
+  }
+
+  useEffect(() => {
+    getHour()
+
+  }, [])
+
   return (
     <>
-      <div className="sidebar-title">Welcome {user?.displayName}!</div>
+      <div className="sidebar-title">{hour < 12 ? `Good Morning, ${user?.displayName}` : `Good evening, ${user?.displayName}`} !</div>
       <div className="sidebar">
         <div className="sidebars">
           <div className="sidebars__top">
@@ -127,26 +138,11 @@ export default function MainDashboard() {
             </div>
           </div>
 
-          <div className="sidebar__stats">
-            <div className="sidebar__stat">
-              <div className="editor-button">
-                {/* <Link exact to={ROUTES.DASHBOARD}> */}
-                <button className="dashboard_button" onClick={handleOpen}>
-                  {" "}
-                  {documents.length == 0 ? "Start Here" : "Go to my Journals"}
-                </button>
-                {/* </Link> */}
-              </div>
-            </div>
-          </div>
-
           <div className="sidebar__stats generator">
             <div className="sidebar__stat">
               <div className="generator">
                 <div className="text_button">
-                  <div className="generator__prompts">
-                     {random}
-                  </div>
+                  <div className="generator__prompts">{random}</div>
                   <button onClick={handleClick}>
                     <RefreshIcon />
                     Generate
@@ -202,6 +198,19 @@ export default function MainDashboard() {
           <div className="right-sidebar-bottom-column">
             <div className="Journal__header">
               {documents.length > 0 ? "Recent Journals" : "No journals"}
+                <div className="sidebar__stat">
+                  <div className="editor-button">
+                    {/* <Link exact to={ROUTES.DASHBOARD}> */}
+                    <button className="dashboard_button" onClick={handleOpen}>
+                      {" "}
+                      {documents.length == 0
+                        ? "Start Here"
+                        : "Go to my Journals"}
+                        <LockOutlinedIcon />
+                    </button>
+                    {/* </Link> */}
+                  </div>
+                </div>
             </div>
             {documents.map(({ id, data: { timestamp, title } }) => (
               <Docs title={title} />

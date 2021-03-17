@@ -41,8 +41,8 @@
 }
 
 .sidebar-title {
-  font-size: 2em;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 400;
   margin-bottom: 20px;
   width: 80%;
   border-bottom: 1px solid whitesmoke;
@@ -191,15 +191,12 @@
   color: #0a66c2 !important;
 }
 
-
 .generator {
   display: flex;
   justify-content: center;
   width: 91%;
   padding-top: 20px;
-  background-color: yellow;
   border-radius: 10px;
-
 }
 .introduction {
   width: 100%;
@@ -227,14 +224,13 @@
   background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  background-color: #efabff;
   margin-left: 10px;
   outline: none;
   transition: 0.3s all linear;
   cursor: pointer;
   font-size: 20px;
   font-family: "Poppin", sans-serif;
-  color: white;
+  color: rgb(82, 93, 250);
   justify-content: center;
   padding: 10px;
 }
@@ -251,6 +247,7 @@
 .editor-button {
   width: 100%;
   background: #efabff;
+  border-radius: 10px;
 }
 
 .Journal__header {
@@ -260,6 +257,28 @@
   margin: 10px;
   margin-bottom: 20px;
   margin-left: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dashboard_button {
+  
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  transition: .3s all linear;
+
+}
+
+.dashboard_button > .MuiSvgIcon-root {
+  opacity: 0.8;
+} 
+
+.dashboard_button:hover {
+  opacity: 0.2;
 }
 
 @media screen and (max-width: 600px) and (max-width: 1000px) {
@@ -298,5 +317,8 @@
   .generator {
     width: 93.7%;
   }
-}
 
+  .Journal__header {
+    flex-direction: column;
+  }
+}
