@@ -24,7 +24,8 @@ import JumboData from "../fixtures/jumbo.json";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Moment from "react-moment";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -91,7 +92,7 @@ export default function MainDashboard() {
   const [open, setOpen] = React.useState(false);
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
-  const [hour, setHour] = useState(null)
+  const [greeting, setGreeting] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -103,32 +104,42 @@ export default function MainDashboard() {
 
   const getHour = () => {
     const date = new Date();
-    const hour = date.getHours()
-    setHour({hour})
+    const hour = date.getHours();
 
-    console.log(hour)
-  }
+    if (hour < 12) {
+      setGreeting("Good morning");
+    } else if (12 < hour < 18) {
+      setGreeting("Good afternoon");
+    } else {
+      setGreeting("Good evening");
+    }
+  };
 
   useEffect(() => {
-    getHour()
-
-  }, [])
+    getHour();
+  }, []);
 
   return (
     <>
-      <div className="sidebar-title">{hour < 12 ? `Good Morning, ${user?.displayName}` : `Good evening, ${user?.displayName}`} !</div>
+      <div className="sidebar-title">
+        {" "}
+        {greeting}, {user?.displayName}! <br />
+        <span className="greetingDate">
+          <Moment format = "dddd, MMMM Do, YYYY"></Moment>
+        </span>
+      </div>
       <div className="sidebar">
         <div className="sidebars">
           <div className="sidebars__top">
             <img
-              src="https://images.unsplash.com/photo-1599944201038-b32b0bf6ebe5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+              src="https://images.unsplash.com/photo-1488188840666-e2308741a62f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80"
               alt=""
             />
             <Avatar src={user?.photoUrl} className="sidebars__avatar">
-              {user.email[0]}
+              {user?.email[0]}
             </Avatar>
-            <h2>{user.displayName}</h2>
-            <h4>{user.email}</h4>
+            <h2>{user?.displayName}</h2>
+            <h4>{user?.email}</h4>
           </div>
 
           <div className="sidebar__stats">
@@ -189,7 +200,7 @@ export default function MainDashboard() {
                   className={classes.submit}
                   onClick={handleSignIn}
                 >
-                  Sign In
+                  Proceed
                 </Button>
               </div>
             </Fade>
@@ -198,19 +209,17 @@ export default function MainDashboard() {
           <div className="right-sidebar-bottom-column">
             <div className="Journal__header">
               {documents.length > 0 ? "Recent Journals" : "No journals"}
-                <div className="sidebar__stat">
-                  <div className="editor-button">
-                    {/* <Link exact to={ROUTES.DASHBOARD}> */}
-                    <button className="dashboard_button" onClick={handleOpen}>
-                      {" "}
-                      {documents.length == 0
-                        ? "Start Here"
-                        : "Go to my Journals"}
-                        <LockOutlinedIcon />
-                    </button>
-                    {/* </Link> */}
-                  </div>
+              <div className="sidebar__stat">
+                <div className="editor-button">
+                  {/* <Link exact to={ROUTES.DASHBOARD}> */}
+                  <button className="dashboard_button" onClick={handleOpen}>
+                    {" "}
+                    {documents.length == 0 ? "Start Here" : "Go to my Journals"}
+                    <LockOutlinedIcon />
+                  </button>
+                  {/* </Link> */}
                 </div>
+              </div>
             </div>
             {documents.map(({ id, data: { timestamp, title } }) => (
               <Docs title={title} />

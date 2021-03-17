@@ -60,30 +60,3 @@ export function ProtectedRoutes({user, children, ...rest}) {
     )
 }
 
-export function ProtectedDashboard({user, children, ...rest}) {
-
-const { firebase } = useContext(FirebaseContext);
-
-    return(
-        <Route 
-            {...rest}
-            render = {({ location }) => {
-                if(user?.uid === user?.uid) {
-                    return children;
-                }
-
-                if(user?.uid != user?.uid) {
-                    return(
-                        <Redirect
-                        to = {{
-                            pathname:'UniversalDashboard',
-                            state: {from: location }
-                        }}
-                        />
-                    );
-                }
-                return null;
-            }}
-        />
-    )
-}

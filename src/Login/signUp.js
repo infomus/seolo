@@ -13,9 +13,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link, path, useHistory } from "react-router-dom";
 
-import { db } from '../firebase.prod'
+import { db } from "../firebase.prod";
 
-import { doesUsernameExist } from '../services/firebase'
+import { doesUsernameExist } from "../services/firebase";
 
 import * as ROUTES from "../constants/routes";
 
@@ -34,9 +34,6 @@ function Copyright() {
     </Typography>
   );
 }
-
-
-
 
 const UseStyles = makeStyles((theme) => ({
   paper: {
@@ -63,13 +60,12 @@ const UseStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [file, setFile] = useState();
   const [error, setError] = useState("");
 
-  const [notes,setNotes] = useState('')
+  const [notes, setNotes] = useState("");
 
   const { firebase } = useContext(FirebaseContext);
   const history = useHistory();
@@ -90,29 +86,25 @@ export default function SignUp() {
 
             db.collection("users")
               .doc(currentUser.uid)
-              .collection('notes').add({
-                notes:notes
-              })
+              .collection("notes")
+              .add({
+                notes: notes,
+              });
             history.push(ROUTES.MAIN_DASH);
           })
-
       )
       .catch((error) => {
         setName("");
-        setLastName("");
         setEmail("");
         setPassword("");
         window.alert(error.message);
       });
-
-
   };
 
-
   const handleFileUpload = () => {
-    console.log('youve added a file')
+    console.log("youve added a file");
     // upload the image to firebase
-  }
+  };
 
   const classes = UseStyles();
 
@@ -135,7 +127,7 @@ export default function SignUp() {
         )}
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="name"
                 name="firstName"
@@ -147,19 +139,6 @@ export default function SignUp() {
                 label="First Name"
                 autoFocus
                 onChange={({ target }) => setName(target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                type="lastName"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                onChange={({ target }) => setLastName(target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -176,7 +155,6 @@ export default function SignUp() {
               />
             </Grid>
 
-            
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
