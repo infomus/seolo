@@ -15,6 +15,7 @@ class Dashboard extends React.Component {
       selectedNoteIndex: null,
       selectedNote: null,
       notes: null,
+      saving:''
     };
   }
 
@@ -63,7 +64,6 @@ class Dashboard extends React.Component {
               // we created a constant called notes which is going to be our array. docs basically houses all the notes. For each _doc
               const data = _doc.data(); // we want to create a const called data and we return the data
               data["id"] = _doc.id;
-              console.log('data',_doc.id)
               const timestamp = data["timestamp"]
               return data; // we return data
             });
@@ -93,8 +93,7 @@ class Dashboard extends React.Component {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
-
-      console.log('Updated form',db.collection("users").doc(firebase.auth().currentUser.uid).collection("notes").doc(id))
+      console.log('safed')
   };
 
   newNote = async (title) => {

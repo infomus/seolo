@@ -222,7 +222,7 @@ export default function MainDashboard() {
               </div>
             </div>
             {documents.map(({ id, data: { timestamp, title } }) => (
-              <Docs title={title} />
+              <Docs title={title} open = {handleOpen} />
             ))}
           </div>
         </div>

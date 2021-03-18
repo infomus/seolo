@@ -86,6 +86,7 @@ class EditorComponent extends React.Component {
       <>
       
         <BorderColorIcon className={classes.editIcon}></BorderColorIcon>
+        
         <div className={classes.titleContainer}>
           <input
             type="text"
@@ -95,10 +96,13 @@ class EditorComponent extends React.Component {
             value={this.state.title ? this.state.title : ""}
             onChange={(e) => this.updateTitle(e.target.value)}
           ></input>
+
         <div className = 'toggleButton'>
           {/* <ButtonDispatch /> */}
         </div>
+
         </div>
+
         <div className={classes.editorContainer}>
           
           <ReactQuill
@@ -112,7 +116,9 @@ class EditorComponent extends React.Component {
             placeholder = {"Your entry here"}
             
           ></ReactQuill>
+
         </div>
+
       </>
     );
   }
