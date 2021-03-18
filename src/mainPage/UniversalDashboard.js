@@ -108,11 +108,12 @@ export default function MainDashboard() {
 
     if (hour < 12) {
       setGreeting("Good morning");
-    } else if (12 < hour < 18) {
+    } if (12 < hour < 18) {
       setGreeting("Good afternoon");
-    } else {
+    } if(hour > 18) {
       setGreeting("Good evening");
     }
+    console.log(hour)
   };
 
   useEffect(() => {
