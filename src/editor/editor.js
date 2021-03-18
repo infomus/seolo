@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ReactQuill from "react-quill";
 import debounce from "../helpers/helpers";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
@@ -7,22 +7,50 @@ import styles from "./styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import './styles/editor.css'
 import ButtonComponent from "./ButtonComponent";
-import { useDispatch } from "react-redux";
-import { closedToggle, openToggle } from "../features/toggleSlice";
 
+
+
+import { connect, useDispatch, useSelector } from "react-redux";
+import { closedToggle, openToggle, selectToggleIsOpen } from "../features/toggleSlice";
+import { bindActionCreators } from "redux";
+import SimpleSnackbar from "../Popover/Snackbar";
 
 function ButtonDispatch() {
 
   const dispatch = useDispatch();
 
+  const selectedToggle = useSelector(selectToggleIsOpen)
+
+  
+
+  useEffect(() => {
+
+    dispatch(openToggle(true))
+
+    const timer = setTimeout(() => {
+      dispatch(closedToggle(false))
+    },500);
+
+    return () => clearTimeout(timer)
+
+  },[])
 
   return(
-    <div>
-      <button onClick = {() => dispatch(openToggle())}>Open me</button>
-      <button onClick = {() => dispatch(closedToggle())}>Close me</button>
-    </div>
+    <>
+    <SimpleSnackbar />
+    
+    </>
   )
+
 }
+
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators({selectToggleIsOpen: selectToggleIsOpen}, dispatch)
+}
+
+
+
+
 
 class EditorComponent extends React.Component {
   constructor() {
@@ -31,6 +59,7 @@ class EditorComponent extends React.Component {
       text: "",
       title: "",
       id: "",
+      saved:false
     };
   }
 
@@ -98,13 +127,11 @@ class EditorComponent extends React.Component {
           ></input>
 
         <div className = 'toggleButton'>
-          {/* <ButtonDispatch /> */}
         </div>
-
+        {this.state.saved ? <div>hello there</div> : null}
         </div>
-
+        {this.state.saving}
         <div className={classes.editorContainer}>
-          
           <ReactQuill
             theme={"snow"}
             value={this.state.text}
@@ -114,9 +141,9 @@ class EditorComponent extends React.Component {
             modules={this.modules}
             formats={this.formats}
             placeholder = {"Your entry here"}
+            focus
             
           ></ReactQuill>
-
         </div>
 
       </>
@@ -141,6 +168,7 @@ class EditorComponent extends React.Component {
       title: this.state.title,
       body: this.state.text,
     });
+
   }, 500);
 
   deleteNote = (note) => {
@@ -149,6 +177,8 @@ class EditorComponent extends React.Component {
     }
   };
 }
+
+connect(matchDispatchToProps)(EditorComponent)
 
 export default withStyles(styles)(EditorComponent); // The withStyles takes an argument which is styles. withStyles returns another function and we invoke that function with our editor component
 // We will be able to access those classes from the styles.js

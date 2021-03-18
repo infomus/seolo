@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { db, firebase } from "../firebase.prod";
 import SidebarComponent from "../sidebar/sidebar";
@@ -6,6 +6,10 @@ import EditorComponent from "../editor/editor";
 import { FirebaseContext } from "../context/firebase";
 
 import "./styles/dashboard.css";
+
+
+
+
 
 class Dashboard extends React.Component {
   constructor() {
@@ -93,7 +97,7 @@ class Dashboard extends React.Component {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log('safed')
+
   };
 
   newNote = async (title) => {
@@ -147,4 +151,8 @@ class Dashboard extends React.Component {
   };
 }
 
-export default Dashboard;
+
+export default (Dashboard)
+
+
+

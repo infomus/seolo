@@ -18,10 +18,10 @@ const styles = theme => ({
     },
     newNoteBtn: {
       width: '100%',
-      height: '35px',
+      height: '60px',
       borderBottom: '1px solid black',
       borderRadius: '0px',
-      backgroundColor: '#29487d',
+      backgroundColor: '#425f90',
       color: 'white',
       '&:hover': {
         backgroundColor: '#88a2ce'
@@ -33,7 +33,6 @@ const styles = theme => ({
       height: '100%',
       boxSizing: 'border-box',
       float: 'left',
-      overflowY: 'scroll',
       overflowX: 'hidden',
       position:'sticky',
       top:'0px'

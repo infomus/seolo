@@ -27,6 +27,9 @@ import { selectUser } from "../features/userSlice";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Moment from "react-moment";
 
+import sha256 from 'crypto-js/sha256';
+
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: "flex",
@@ -149,7 +152,6 @@ export default function MainDashboard() {
               <p className="sidebar__statsNumber">{documents.length}</p>
             </div>
           </div>
-
           <div className="sidebar__stats generator">
             <div className="sidebar__stat">
               <div className="generator">
@@ -163,6 +165,7 @@ export default function MainDashboard() {
               </div>
             </div>
           </div>
+
         </div>
 
         <div className="right-sidebar">

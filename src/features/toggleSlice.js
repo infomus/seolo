@@ -6,13 +6,12 @@ export const toggleSlice = createSlice({
     ToggleIsOpen: false,
   },
   reducers: {
-    openToggle: (state) => {
-      state.ToggleIsOpen = true;
-      console.log(state.ToggleIsOpen)
+    openToggle: (state,action) => {
+      state.ToggleIsOpen = action.payload;
     },
-    closedToggle: (state) => {
-      state.ToggleIsOpen = false;
-      console.log(state.ToggleIsOpen)
+    closedToggle: (state,action) => {
+      state.ToggleIsOpen = action.payload;
+
 
     },
   },

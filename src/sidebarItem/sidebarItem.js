@@ -8,20 +8,8 @@ import { removeHTMLTags } from "../helpers/helpers";
 import './sidebarItem.css'
 
 import { firebase,db } from "../firebase.prod";
-import { useSelector } from "react-redux";
-import { selectToggleIsOpen } from "../features/toggleSlice";
-
-function TogglerComponent({children, ...restProps}) {
-
-  const ToggleIsOpen = useSelector(selectToggleIsOpen) 
 
 
-  return(
-     <div className = 'here'>
-      {children}
-     </div>
-  )
-}
 
 
 class sidebarItemComponent extends React.Component {
@@ -36,7 +24,6 @@ class sidebarItemComponent extends React.Component {
     return (
       
       <>
-      <TogglerComponent>
       <div
       key={_index}
       onClick={() => this.selectNote(_note, _index)}
@@ -61,7 +48,6 @@ class sidebarItemComponent extends React.Component {
           ></DeleteIcon>
         </ListItem>
       </div>
-      </TogglerComponent>
       </>
       
     );
@@ -77,5 +63,6 @@ class sidebarItemComponent extends React.Component {
     }
   };
 }
+
 
 export default withStyles(styles)(sidebarItemComponent);
