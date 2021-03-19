@@ -82,6 +82,7 @@ export default function MainDashboard() {
               snapshot.docs.map((doc) => ({
                 id: doc.id,
                 data: doc.data(),
+
               }))
             )
           );
@@ -106,17 +107,9 @@ export default function MainDashboard() {
   };
 
   const getHour = () => {
-    const date = new Date();
-    const hour = date.getHours();
 
-    if (hour < 12) {
-      setGreeting("Good morning");
-    } if (12 < hour < 18) {
-      setGreeting("Good afternoon");
-    } if(hour > 18) {
-      setGreeting("Good evening");
-    }
-    console.log(hour)
+    var g = null;
+
   };
 
   useEffect(() => {
@@ -226,7 +219,7 @@ export default function MainDashboard() {
               </div>
             </div>
             {documents.map(({ id, data: { timestamp, title } }) => (
-              <Docs title={title} open = {handleOpen} />
+              <Docs title={title} open = {handleOpen} timestamp = {timestamp.toDate().toString()} />
             ))}
           </div>
         </div>

@@ -353,3 +353,20 @@
 .sidebars__avatar {
   text-transform: uppercase;
 }
+
+
+@media all and (min-width:1500px) {
+  .generator {
+    width: 94%;
+  }
+}
+
+.documents-inner {
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px;
+}
+
+.lastEdited {
+  opacity: 0.8;
+}

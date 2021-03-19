@@ -19,13 +19,14 @@ import { FirebaseContext } from "../context/firebase";
 import * as ROUTES from "../constants/routes";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
+import CustomizedSnackbars from "../Popover/SnackbarAlert/snackBarAlert";
 
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" to = '/Home'>
+      <Link color="inherit" to = '/'>
         Journaly
       </Link>{" "}
       {new Date().getFullYear()}
@@ -71,7 +72,7 @@ export default function SignIn() {
   const classes = useStyles();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState(false);
   const dispatch = useDispatch();
 
   const { firebase } = useContext(FirebaseContext);
@@ -95,7 +96,7 @@ export default function SignIn() {
       .catch((error) => {
         setPassword("");
         setEmailAddress("");
-        window.alert(error.message);
+        setErrors(true)
       });
   };
 
@@ -109,6 +110,8 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+
+        { errors && <CustomizedSnackbars value = {errors} severity = 'error' message = 'Bummer! Try again' />}
 
         <form className={classes.form} noValidate>
           <TextField

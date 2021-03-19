@@ -21,12 +21,13 @@ import * as ROUTES from "../constants/routes";
 
 import Login from "./Login";
 import { FirebaseContext } from "../context/firebase";
+import CustomizedSnackbars from "../Popover/SnackbarAlert/snackBarAlert";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="/">
+      <Link color="inherit" to="/">
         Journaly
       </Link>{" "}
       {new Date().getFullYear()}
@@ -63,7 +64,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [file, setFile] = useState();
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState(false);
 
   const [notes, setNotes] = useState("");
 
@@ -97,7 +98,7 @@ export default function SignUp() {
         setName("");
         setEmail("");
         setPassword("");
-        window.alert(error.message);
+        setErrors(true)
       });
   };
 
@@ -118,13 +119,9 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        {error && (
-          <div className={classes.errorContainer}>
-            <p className={classes.errorText}>
-              Please check your email or password
-            </p>
-          </div>
-        )}
+
+{ errors && <CustomizedSnackbars value = {errors} severity = 'error' message = 'Check your email or password. Almost there!' />}
+
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>

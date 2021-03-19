@@ -15,6 +15,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { closedToggle, openToggle, selectToggleIsOpen } from "../features/toggleSlice";
 import { bindActionCreators } from "redux";
 import SimpleSnackbar from "../Popover/Snackbar";
+import CustomizedSnackbars from "../Popover/SnackbarAlert/snackBarAlert";
 
 function ButtonDispatch() {
 
@@ -28,7 +29,7 @@ function ButtonDispatch() {
     setTimeout(() => {
 
       dispatch(closedToggle(false))
-    }, 2000)
+    }, 1500)
   }
 
   
@@ -171,6 +172,8 @@ class EditorComponent extends React.Component {
   }, 500);
 
   deleteNote = (note) => {
+
+
     if (window.confirm(`Are you sure you want to delete: ${note.title}`)) {
       this.props.deleteNote(note);
     }

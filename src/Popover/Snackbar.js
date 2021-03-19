@@ -14,7 +14,7 @@ export default function SimpleSnackbar() {
 
 
   return (
-    <div>
+    <div className = "snackbar">
       <Snackbar
         anchorOrigin={{
           vertical: 'bottom',

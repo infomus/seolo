@@ -28,10 +28,10 @@ class sidebarItemComponent extends React.Component {
       key={_index}
       onClick={() => this.selectNote(_note, _index)}
       >
-
+        
         <ListItem
           className={classes.ListItem}
-          selected={selectedNoteIndex === _index}
+          selected={selectedNoteIndex === _index[0]}
           alignItems="flex-start"
           >
           <div className={classes.textSection}>
