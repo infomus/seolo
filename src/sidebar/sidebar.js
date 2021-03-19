@@ -38,10 +38,6 @@ class sidebarComponent extends React.Component {
                   maxLength="40"
                   autoFocus
                 />
-                {/* <Button
-                    className={classes.newNoteSubmitBtn}
-                    onClick={this.newNote}
-                  > Create new note</Button> */}
               </div>
             ) : null}
             <List>

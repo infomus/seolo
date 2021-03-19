@@ -8,6 +8,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import './styles/editor.css'
 import ButtonComponent from "./ButtonComponent";
 
+import Button from '@material-ui/core/Button';
 
 
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -21,27 +22,25 @@ function ButtonDispatch() {
 
   const selectedToggle = useSelector(selectToggleIsOpen)
 
-  
-
-  useEffect(() => {
-
+  const handlePopover = () => {
     dispatch(openToggle(true))
 
-    const timer = setTimeout(() => {
+    setTimeout(() => {
+
       dispatch(closedToggle(false))
-    },500);
+    }, 2000)
+  }
 
-    return () => clearTimeout(timer)
+  
+return(
+  <>
+  <Button onClick = {handlePopover} variant="contained" color="secondary">
+  Save
+</Button>
 
-  },[])
-
-  return(
-    <>
-    <SimpleSnackbar />
-    
-    </>
-  )
-
+  <SimpleSnackbar />
+  </>
+)
 }
 
 function matchDispatchToProps(dispatch) {
@@ -127,8 +126,8 @@ class EditorComponent extends React.Component {
           ></input>
 
         <div className = 'toggleButton'>
+          <ButtonDispatch />
         </div>
-        {this.state.saved ? <div>hello there</div> : null}
         </div>
         {this.state.saving}
         <div className={classes.editorContainer}>
