@@ -62,7 +62,7 @@ class sidebarComponent extends React.Component {
     } else {
       return (
         <div>
-          <div className={classes.noNote}>Loading...</div>
+          <div className = {classes.noNote}> Loading...</div>
         </div>
       );
     }

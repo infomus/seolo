@@ -42,3 +42,7 @@ li {
   height: 59.5px !important;
 }
 
+.quill > .ql-container > .ql-editor.ql-blank::before{
+  font-size: 16px;
+  font-family:'nunito';
+}

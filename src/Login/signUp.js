@@ -67,6 +67,7 @@ export default function SignUp() {
   const [errors, setErrors] = useState(false);
 
   const [notes, setNotes] = useState("");
+  const [quicknotes, setQuickNotes] = useState('')
 
   const { firebase } = useContext(FirebaseContext);
   const history = useHistory();
@@ -91,6 +92,13 @@ export default function SignUp() {
               .add({
                 notes: notes,
               });
+
+              db.collection('users')
+              .doc(currentUser.uid)
+              .collection('quicknotes')
+              .add({
+                quicknotes:quicknotes
+              })
             history.push(ROUTES.MAIN_DASH);
           })
       )

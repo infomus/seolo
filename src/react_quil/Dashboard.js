@@ -86,6 +86,7 @@ class Dashboard extends React.Component {
 
   selectNote = (note, index) =>
     this.setState({ selectedNoteIndex: index, selectedNote: note });
+    
   noteUpdate = (id, noteObj) => {
     db.collection("users")
       .doc(firebase.auth().currentUser.uid)
@@ -97,6 +98,7 @@ class Dashboard extends React.Component {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
+      console.log(id)
 
   };
 

@@ -143,7 +143,7 @@ class EditorComponent extends React.Component {
             placeholder = {"Your entry here"}
             focus
             
-          ></ReactQuill>
+          ></ReactQuill> 
         </div>
 
       </>
@@ -159,7 +159,7 @@ class EditorComponent extends React.Component {
 
   updateBody = async (val) => {
     await this.setState({ text: val }); // the updateBody will set the state of the text to the value
-    this.update();
+    this.update(); // this will run the update function
   };
 
   update = debounce(() => {

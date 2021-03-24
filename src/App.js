@@ -30,9 +30,14 @@ export default function App() {
   return (
     <div className="app-container">
       <Router>
-        <Navbar />
         <Switch>
-          <Route exact path={ROUTES.HOME} component={Home} />
+
+
+          <Route exact path={ROUTES.HOME}>
+            <Navbar />
+            <Home />
+          </Route>
+
 
           <Route exact path = {ROUTES.LEARN} component = {LearnMore} />
 
@@ -50,6 +55,7 @@ export default function App() {
           </ProtectedRoutes>
 
           <ProtectedRoutes user={user} path={ROUTES.DASHBOARD}>
+            <Navbar />
             <Dashboard />
           </ProtectedRoutes>
 

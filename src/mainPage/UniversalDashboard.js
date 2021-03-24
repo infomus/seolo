@@ -8,66 +8,56 @@ import { useAuthListener } from "../hooks";
 
 import { db } from "../firebase.prod";
 import Docs from "./documentComponent/documents";
-import { Avatar } from "@material-ui/core";
 import { FirebaseContext } from "../context/firebase";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 
 import JumboData from "../fixtures/jumbo.json";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/userSlice";
 
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Moment from "react-moment";
 
-import sha256 from 'crypto-js/sha256';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+
+import sha256 from "crypto-js/sha256";
+
+// All the new imports below
+import HomeIcon from "@material-ui/icons/Home";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
+import { IconButton } from "@material-ui/core";
+import TransitionsModal from "../modal/Modal";
+import MouseOverPopover from "../Popover/HoverPopOver/PopHover";
+import Profile from "./profile/Profile";
+import ModalAuth from "./modal/Modal";
+import LeftColumn from "./dashboardLeft/LeftDashboard";
+import BasicTable from "./dataTable/Data";
+
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+
+import ReactQuill from "react-quill";
+import QuickNotes from "./QuickSelfReflection/QuickNotes";
 
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
 
 export default function MainDashboard() {
-  const { user } = useAuthListener();
   const [documents, setDocuments] = useState([]);
   const [random, setRandom] = useState("Don't know what to write about");
+  const { user } = useAuthListener();
 
   const { firebase } = useContext(FirebaseContext);
-  const history = useHistory();
 
   const handleClick = () => {
     const values = Object.values(JumboData);
     const randomValue = values[parseInt(Math.random() * values.length)];
 
     setRandom(randomValue);
-  };
-
-  const handleSignIn = (event) => {
-    event.preventDefault();
-
-    // ask them for a  4 digit number and then save it in a state and have them use that as a code to enter the journal application
-    if (email == user.email) {
-      history.push("/DASHBOARD");
-    } else {
-      alert("Please use same credentials");
-    }
   };
 
   useMemo(() => {
@@ -82,7 +72,6 @@ export default function MainDashboard() {
               snapshot.docs.map((doc) => ({
                 id: doc.id,
                 data: doc.data(),
-
               }))
             )
           );
@@ -92,11 +81,9 @@ export default function MainDashboard() {
     });
   }, []);
 
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [id, setId] = useState("");
-  const [email, setEmail] = useState("");
   const [greeting, setGreeting] = useState("");
+  const [docs, setDocs] = useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -107,9 +94,7 @@ export default function MainDashboard() {
   };
 
   const getHour = () => {
-
     var g = null;
-
   };
 
   useEffect(() => {
@@ -118,109 +103,50 @@ export default function MainDashboard() {
 
   return (
     <>
-      <div className="sidebar-title">
-        {" "}
-        {greeting}, {user?.displayName}! <br />
-        <span className="greetingDate">
-          <Moment format = "dddd, MMMM Do, YYYY"></Moment>
-        </span>
-      </div>
-      <div className="sidebar">
-        <div className="sidebars">
-          <div className="sidebars__top">
-            <img
-              src="https://images.unsplash.com/photo-1488188840666-e2308741a62f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1053&q=80"
-              alt=""
-            />
-            <Avatar src={user?.photoUrl} className="sidebars__avatar">
-              {user?.email[0]}
-            </Avatar>
-            <h2>{user?.displayName}</h2>
-            <h4>{user?.email}</h4>
-          </div>
+      <div className="universal">
+        <div className="universal-dashboard">
+          {/* <LeftColumn /> */}
 
-          <div className="sidebar__stats">
-            <div className="sidebar__stat">
-              <p>Journals</p>
-              <p className="sidebar__statsNumber">{documents.length}</p>
-            </div>
-          </div>
-          <div className="sidebar__stats generator">
-            <div className="sidebar__stat">
-              <div className="generator">
-                <div className="text_button">
-                  <div className="generator__prompts">{random}</div>
-                  <button onClick={handleClick}>
-                    <RefreshIcon />
-                    Generate
-                  </button>
+          <ModalAuth open={open} close={handleClose} />
+
+          <Profile open={handleOpen} />
+
+          <div className="journal-content">
+            <div className="journal-inner-content">
+              <div className="Overview">Overview</div>
+              <div className="top-column">
+                <div className="greeting">
+                  Good Morning, {user?.displayName}!
                 </div>
+                <Moment format="dddd, MMMM Do, YYYY"></Moment>
               </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div className="right-sidebar">
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <div className={classes.paper}>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="email"
-                  name="email"
-                  type="email"
-                  autoFocus
-                  onChange={({ target }) => setEmail(target.value)}
-                />
-
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={handleSignIn}
-                >
-                  Proceed
-                </Button>
-              </div>
-            </Fade>
-          </Modal>
-
-          <div className="right-sidebar-bottom-column">
-            <div className="Journal__header">
-              {documents.length > 0 ? "Recent Journals" : "No journals"}
-              <div className="sidebar__stat">
-                <div className="editor-button">
-                  {/* <Link exact to={ROUTES.DASHBOARD}> */}
-                  <button className="dashboard_button" onClick={handleOpen}>
-                    {" "}
-                    {documents.length == 0 ? "Start Here" : "Go to my Journals"}
-                    <LockOutlinedIcon />
-                  </button>
-                  {/* </Link> */}
+              <div className="journal-column">
+                <div className="tableHeader">
+                  <div>Title</div>
+                  <div>Last edited</div>
                 </div>
+                {documents.map(({ id, data: { timestamp, title } }) => (
+                  <>
+                    <BasicTable
+                      Title="Title"
+                      title2="Last edited"
+                      name={documents}
+                      id={id}
+                      timestamp={timestamp.toDate().toString()}
+                      title={title}
+                      onClick={open}
+                      close={handleClose}
+                      key = {id}
+                    />
+                  </>
+                ))}
+              </div>
+              <div>
+
+                <QuickNotes />
+
               </div>
             </div>
-            {documents.map(({ id, data: { timestamp, title } }) => (
-              <Docs title={title} open = {handleOpen} timestamp = {timestamp.toDate().toString()} />
-            ))}
           </div>
         </div>
       </div>
@@ -228,10 +154,3 @@ export default function MainDashboard() {
   );
 }
 
-// {
-//   documents.map(({id, data : {timestamp, title}}) => (
-//     <>
-//     <div>{title}</div>
-//     </>
-//   ))
-// }
