@@ -46,6 +46,7 @@ const Quill = styled.div`
     border-radius: 20px;
     margin-left: 10px;
     padding: 10px;
+    opacity:0.4;
 
   }
 
@@ -76,7 +77,7 @@ class QuickNotes extends React.Component {
             value={this.state.quicknotes}
           />
           <div className="writing-prompt">
-              Writing prompt goes here
+              Writing prompts goes here
           </div>
         </Quill>
       </>
