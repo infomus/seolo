@@ -17,21 +17,15 @@ const useStyles = makeStyles({
 });
 
 
-export default function BasicTable({ Title, title2, name, title, timestamp, key}) {
+export default function BasicTable({ Title, title2, name, title, timestamp}) {
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        {/* <TableHead>
-          <TableRow>
-            <TableCell>{Title}</TableCell>
-            <TableCell align="right">{title2}</TableCell>
-          </TableRow>
-        </TableHead> */}
         <TableBody>
             <TableRow>
-              <TableCell component="th" scope="row" key >
+              <TableCell component="th" scope="row" >
                 {title}
               </TableCell>
               <TableCell align="right">{moment(timestamp).calendar()}</TableCell>
