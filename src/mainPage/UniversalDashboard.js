@@ -83,7 +83,6 @@ export default function MainDashboard() {
 
   const [open, setOpen] = React.useState(false);
   const [greeting, setGreeting] = useState("");
-  const [docs, setDocs] = useState('');
 
   const handleOpen = () => {
     setOpen(true);
@@ -93,13 +92,23 @@ export default function MainDashboard() {
     setOpen(false);
   };
 
-  const getHour = () => {
-    var g = null;
-  };
 
   useEffect(() => {
     getHour();
   }, []);
+
+  const getHour = () => {
+    let curDate = new Date();
+    curDate = curDate.getHours();
+
+    if(curDate >= 1 && curDate < 12 ) {
+      setGreeting('Good Morning')
+    } else if(curDate >= 12 && curDate < 18) {
+      setGreeting('Good Afternoon')
+    } else {
+      setGreeting('Good evening')
+    }
+  }
 
   return (
     <>
@@ -116,10 +125,13 @@ export default function MainDashboard() {
               <div className="Overview">Overview</div>
               <div className="top-column">
                 <div className="greeting">
-                  Good Morning, {user?.displayName}!
+                  {greeting}, {user?.displayName}!
                 </div>
                 <Moment format="dddd, MMMM Do, YYYY"></Moment>
               </div>
+              <div className="Journal__header">
+                {documents.length > 0 ? "Recent Journals" : "No journals"}
+                </div>
               <div className="journal-column">
                 <div className="tableHeader">
                   <div>Title</div>

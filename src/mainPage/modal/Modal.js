@@ -37,6 +37,8 @@ export default function ModalAuth({open, close}) {
   const handleSignIn = (event) => {
     event.preventDefault();
 
+
+    console.log(user.uid)
     // ask them for a  4 digit number and then save it in a state and have them use that as a code to enter the journal application
     if (email == user.email) {
       history.push("/DASHBOARD");

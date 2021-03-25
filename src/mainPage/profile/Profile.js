@@ -16,6 +16,8 @@ import { logout } from "../../features/userSlice";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import StarsIcon from '@material-ui/icons/Stars';
 
+import logo from '../../images/logo.png'
+
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 
 const Overlay = styled.div`
@@ -23,7 +25,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: -1;
 `;
 
