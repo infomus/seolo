@@ -134,7 +134,7 @@ export default function SignUp() {
           Sign up
         </Typography>
 
-{ errors && <CustomizedSnackbars value = {errors} severity = 'error' message = 'Check your email or password. Almost there!' />}
+{ errors && <CustomizedSnackbars value = {errors} severity = 'error' message = 'Check your email or password. Almost there!' handle = {() => setErrors(false)} />}
 
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>

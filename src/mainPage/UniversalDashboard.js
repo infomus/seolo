@@ -106,7 +106,7 @@ export default function MainDashboard() {
     } else if(curDate >= 12 && curDate < 18) {
       setGreeting('Good Afternoon')
     } else {
-      setGreeting('Good evening')
+      setGreeting('Good Evening')
     }
   }
 

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedSnackbars({value, severity, message}) {
+export default function CustomizedSnackbars({value, severity, message, handle}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -35,8 +35,11 @@ export default function CustomizedSnackbars({value, severity, message}) {
 
   return (
     <div className={classes.root}>
+      {/* <Button variant="outlined" onClick={() => setOpen(!open)}>
+        Open success snackbar
+      </Button> */}
       <Snackbar open={value} autoHideDuration={6000} onClose={handleClose}>
-        <Alert severity={severity}>
+        <Alert severity={severity} onClose={handle}>
           {message}
         </Alert>
       </Snackbar>

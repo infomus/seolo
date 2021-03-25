@@ -111,7 +111,7 @@ export default function SignIn() {
           Sign in
         </Typography>
 
-        { errors && <CustomizedSnackbars value = {errors} severity = 'error' message = 'Bummer! Try again' />}
+        { errors && <CustomizedSnackbars value = {errors} severity = 'error' message = 'Bummer! Try again' handle = {() => setErrors(false)} />}
 
         <form className={classes.form} noValidate>
           <TextField
