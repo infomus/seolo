@@ -3,10 +3,10 @@ import styled from "styled-components";
 import ReactQuill from "react-quill";
 import { db, firebase } from "../../firebase.prod";
 import debounce from "../../helpers/helpers";
+import Prompt from "../writing_prompt/Prompt";
 
 const Quill = styled.div`
   display: flex;
-  padding-top: 50px;
   .react-quill-editor {
     width: 350px;
     height: 350px;
@@ -32,24 +32,12 @@ const Quill = styled.div`
 }
 
   .ql-editor {
-    background-color: #fff4ba !important;
+    background-color: #FDFF85 !important;
     border-radius: 20px !important;
     -webkit-box-shadow: 9px 3px 19px 1px rgba(0, 0, 0, 0.07);
     -moz-box-shadow: 9px 3px 19px 1px rgba(0, 0, 0, 0.07);
     box-shadow: 9px 3px 19px 1px rgba(0, 0, 0, 0.07);
   }
-
-  .writing-prompt {
-      
-    flex: 1;
-    background: white;
-    border-radius: 20px;
-    margin-left: 10px;
-    padding: 10px;
-    opacity:0.4;
-
-  }
-
 
 `;
 
@@ -76,9 +64,6 @@ class QuickNotes extends React.Component {
             onChange={this.UpdateQuickNotes}
             value={this.state.quicknotes}
           />
-          <div className="writing-prompt">
-              Writing prompts goes here
-          </div>
         </Quill>
       </>
     );

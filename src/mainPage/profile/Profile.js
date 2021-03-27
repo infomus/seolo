@@ -80,14 +80,14 @@ export default function Profile({ open }) {
                   </Button>
                 </div>
 
-                <div className="menu-single">
+                {/* <div className="menu-single">
                   <Button disabled={true}>
                     <Link exact to="#">
                       <BorderColorIcon />
                       <div>Writing Prompts</div>
                     </Link>
                   </Button>
-                </div>
+                </div> */}
 
                 {/* <div className="menu-single">
                   <Button onClick={open}>

@@ -17,6 +17,16 @@ import { bindActionCreators } from "redux";
 import SimpleSnackbar from "../Popover/Snackbar";
 import CustomizedSnackbars from "../Popover/SnackbarAlert/snackBarAlert";
 
+import CryptoJS from 'crypto-js'
+import CryptoAES from 'crypto-js/aes'
+
+
+// var ciphertext = CryptoJS.AES.encrypt('this.state.text', 'secret key 123').toString();
+// var bytes = CryptoJS.AES.decrypt(ciphertext, 'secret key 123');
+// var originalText = bytes.toString(CryptoJS.enc.Utf8)
+// console.log(originalText)
+
+
 function ButtonDispatch() {
 
   const dispatch = useDispatch();
@@ -63,13 +73,21 @@ class EditorComponent extends React.Component {
     };
   }
 
+  decryptData = () => {
+
+
+  }
+
   // ComponentDidMount is called when we press the first document and have it rendered on react-quill.
   componentDidMount = () => {
+
     this.setState({
       text: this.props.selectedNote.body,
       title: this.props.selectedNote.title,
       id: this.props.selectedNote.id,
     });
+
+
   };
 
   // The componentDidUpdate is called when we select a note and the id of the selected note is not equal to the id of the react-quill paper. It then goes on to render the state with the proper notes
@@ -111,6 +129,10 @@ class EditorComponent extends React.Component {
 
   render() {
     const { classes, _note } = this.props;
+
+
+
+    
     return (
       <>
       

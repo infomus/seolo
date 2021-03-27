@@ -44,7 +44,9 @@ import TableCell from "@material-ui/core/TableCell";
 import ReactQuill from "react-quill";
 import QuickNotes from "./QuickSelfReflection/QuickNotes";
 
-
+import CryptoJS from "crypto-js";
+import CryptoAES from "crypto-js/aes";
+import Prompt from "./writing_prompt/Prompt";
 
 export default function MainDashboard() {
   const [documents, setDocuments] = useState([]);
@@ -92,7 +94,6 @@ export default function MainDashboard() {
     setOpen(false);
   };
 
-
   useEffect(() => {
     getHour();
   }, []);
@@ -101,14 +102,14 @@ export default function MainDashboard() {
     let curDate = new Date();
     curDate = curDate.getHours();
 
-    if(curDate >= 1 && curDate < 12 ) {
-      setGreeting('Good Morning')
-    } else if(curDate >= 12 && curDate < 18) {
-      setGreeting('Good Afternoon')
+    if (curDate >= 1 && curDate < 12) {
+      setGreeting("Good Morning");
+    } else if (curDate >= 12 && curDate < 18) {
+      setGreeting("Good Afternoon");
     } else {
-      setGreeting('Good Evening')
+      setGreeting("Good Evening");
     }
-  }
+  };
 
   return (
     <>
@@ -131,7 +132,7 @@ export default function MainDashboard() {
               </div>
               <div className="Journal__header">
                 {documents.length > 0 ? "Recent Journals" : "No journals"}
-                </div>
+              </div>
               <div className="journal-column">
                 <div className="tableHeader">
                   <div>Title</div>
@@ -148,14 +149,14 @@ export default function MainDashboard() {
                       title={title}
                       onClick={open}
                       close={handleClose}
-                      key = {id}
+                      key={id}
                     />
                   </>
                 ))}
               </div>
-              <div>
-
+              <div className = 'writing-container'>
                 <QuickNotes />
+                <Prompt />
 
               </div>
             </div>
@@ -165,4 +166,3 @@ export default function MainDashboard() {
     </>
   );
 }
-

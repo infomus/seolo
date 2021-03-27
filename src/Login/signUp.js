@@ -171,20 +171,6 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                type="file"
-                name="Profile image"
-                type="file"
-                id="profile"
-                onChange={({ target }) => setImage(target.value)}
-              />
-              <div className = {classes.profileImage}>Profile Image*</div>
-            </Grid>
-
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
                 type="password"
                 name="password"
                 label="Password"

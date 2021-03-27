@@ -7,6 +7,8 @@ import { FirebaseContext } from "../context/firebase";
 
 import "./styles/dashboard.css";
 
+import CryptoJS from 'crypto-js'
+import CryptoAES from 'crypto-js/aes'
 
 
 
@@ -22,6 +24,9 @@ class Dashboard extends React.Component {
       saving:''
     };
   }
+
+
+
 
   render() {
     return (
@@ -88,19 +93,31 @@ class Dashboard extends React.Component {
     this.setState({ selectedNoteIndex: index, selectedNote: note });
     
   noteUpdate = (id, noteObj) => {
+
+    // var cipherText = CryptoJS.AES.encrypt(this.state.notes[0].body, 'my secret key').toString()
+    // console.log('encrypted body', cipherText)
+
+    
+    // var bytes = CryptoJS.AES.decrypt(cipherText, 'secret key 123');
+    // var originalText = bytes.toString(CryptoJS.enc.Utf8)
+    // console.log(originalText)
+
     db.collection("users")
       .doc(firebase.auth().currentUser.uid)
       .collection("notes")
       .doc(id)
       .update({
         title: noteObj.title,
-        body: noteObj.body,
+        body: noteObj.body, // We have to encrypt this so the messages can't be read
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
-      console.log(id)
 
   };
+
+  EncryptData = (body) => {
+
+  }
 
   newNote = async (title) => {
     const note = {
