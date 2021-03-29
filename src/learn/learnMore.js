@@ -49,7 +49,7 @@ class LearnMore extends React.Component {
             <Content
               title="Why journal on Journaly?"
               description="Journaly is a brand new platform for those who want to
-            journal. The added securtiy features within Journaly
+            journal. The added security features within Journaly
             is what sets us apart."
             />
 
@@ -65,7 +65,7 @@ class LearnMore extends React.Component {
 
             <Content
               title="Track your journey on your dashboard"
-              description="Journaly’s dashboard showcases all of your journals you have written neatly and elegantly. With a high level view on your dashboard, it is easy to keep track of your journals. "
+              description="Journaly’s dashboard showcases all of your journals & writing prompts you have written, neatly and elegantly. With a birds-eye view on your dashboard, it is easy to keep track of your journey. "
             />
           </div>
 

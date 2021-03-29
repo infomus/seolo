@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Router } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import { useAuthListener } from "../../hooks";
 import styled from "styled-components";
@@ -76,13 +76,13 @@ export default function Profile({ open }) {
                 <div className="menu-single">
                   <Button onClick={open}>
                     <LockIcon />
-                    <div>Journals</div>
+                    <div>My Journals</div>
                   </Button>
                 </div>
 
                 {/* <div className="menu-single">
-                  <Button disabled={true}>
-                    <Link exact to="#">
+                  <Button>
+                    <Link exact to={ROUTES.TEST}>
                       <BorderColorIcon />
                       <div>Writing Prompts</div>
                     </Link>
@@ -98,10 +98,8 @@ export default function Profile({ open }) {
 
                 <div className="menu-single logout">
                   <Button onClick={handleAuthentication}>
-                    <Link exact to="#">
                       <ExitToAppIcon className = 'logoutIcon' />
                       <div>Logout</div>
-                    </Link>
                   </Button>
                 </div>
               </div>

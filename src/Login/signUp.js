@@ -72,6 +72,7 @@ export default function SignUp() {
 
   const [notes, setNotes] = useState("");
   const [quicknotes, setQuickNotes] = useState('')
+  const [writingPrompt, setWritingPrompt] = useState('')
   const [image, setImage] = useState(null)
 
   const { firebase } = useContext(FirebaseContext);
@@ -104,6 +105,13 @@ export default function SignUp() {
               .collection('quicknotes')
               .add({
                 quicknotes:quicknotes
+              })
+
+              db.collection('users')
+              .doc(currentUser.uid)
+              .collection('WritingPrompt')
+              .add({
+                writingPrompt:writingPrompt
               })
             history.push(ROUTES.MAIN_DASH);
           })

@@ -29,7 +29,7 @@ import sha256 from "crypto-js/sha256";
 import HomeIcon from "@material-ui/icons/Home";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-import { IconButton } from "@material-ui/core";
+import { Divider, IconButton } from "@material-ui/core";
 import TransitionsModal from "../modal/Modal";
 import MouseOverPopover from "../Popover/HoverPopOver/PopHover";
 import Profile from "./profile/Profile";
@@ -154,6 +154,9 @@ export default function MainDashboard() {
                   </>
                 ))}
               </div>
+                <div className = 'writing-prompt'>
+                  Writing Prompt
+                </div>
               <div className = 'writing-container'>
                 <QuickNotes />
                 <Prompt />

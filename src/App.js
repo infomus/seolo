@@ -12,7 +12,7 @@ import Dashboard from "./react_quil/Dashboard";
 import { firebase } from "./firebase.prod";
 
 import * as ROUTES from "./constants/routes";
-import test from "./testfolder/test";
+import Test from "./testfolder/WritingPrompt";
 import signUp from "./Login/signUp";
 
 import { IsuserRedirect, ProtectedRoutes, ProtectedDashboard } from "./helpers/routesUser";
@@ -21,6 +21,7 @@ import { useAuthListener } from "./hooks";
 import MainDashboard from "./mainPage/UniversalDashboard";
 import ReactQuill from "react-quill";
 import LearnMore from "./learn/learnMore";
+import Prompt from "./mainPage/writing_prompt/Prompt";
 
 
 
@@ -31,15 +32,6 @@ export default function App() {
     <div className="app-container">
       <Router>
         <Switch>
-
-
-          <Route exact path={ROUTES.HOME}>
-            <Navbar />
-            <Home />
-          </Route>
-
-
-          <Route exact path = {ROUTES.LEARN} component = {LearnMore} />
 
           <IsuserRedirect
             user={user}
@@ -54,10 +46,22 @@ export default function App() {
             <MainDashboard />
           </ProtectedRoutes>
 
+          {/* <ProtectedRoutes user = {user} path = {ROUTES.TEST}>
+            <Test />
+          </ProtectedRoutes> */}
+
           <ProtectedRoutes user={user} path={ROUTES.DASHBOARD}>
             <Navbar />
             <Dashboard />
           </ProtectedRoutes>
+
+
+          <Route exact path={ROUTES.HOME}>
+            <Navbar />
+            <Home />
+          </Route>
+
+          <Route exact path = {ROUTES.LEARN} component = {LearnMore} />
 
         </Switch>
       </Router>

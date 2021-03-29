@@ -366,11 +366,6 @@
   text-transform: uppercase;
 }
 
-@media all and (min-width: 1500px) {
-  .generator {
-    width: 94%;
-  }
-}
 
 .documents-inner {
   display: flex;
@@ -601,7 +596,7 @@
   min-height: fit-content;
   max-height: 350px;
   min-height: 300px;
-  border-radius: 3px
+  border-radius: 3px;
 }
 
 .tableHeader {
@@ -651,6 +646,15 @@
 
 .writing-container {
   display: flex;
-  padding-top: 50px;
+  padding-top: 10px;
   border-radius: 20px;
+}
+
+.writing-prompt {
+  font-family: "Nunito", sans-serif;
+  font-size: 16px;
+  line-height: 1.8px;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  margin-left: 0px;
 }
