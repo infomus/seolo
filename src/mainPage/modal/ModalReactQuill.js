@@ -7,15 +7,37 @@ import ReactQuill from "react-quill";
 
 import styled from "styled-components";
 import QuickNotes from "../QuickSelfReflection/QuickNotes";
-import Prompt from "../writing_prompt/Prompt";
+// import Prompt from "../writing_prompt/Prompt";
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+
 
 const ReactQuillStyles = styled.div`
 
   height:100%;
   width:100%;
   margin-left:10px;
-  .quill {
-    height: 90% !important;
+
+
+  .quill, .ql-container {
+    height: 85% !important;
+  }
+
+  .modalPrompt {
+    width:100% !important;
+    height:100%;
+  }
+
+  textarea {
+    width:100%;
+    border: none;
+    outline: none;
+    font-family: "Roboto";
+    font-size: 16px;
+    padding: 20px;
+    font-weight: 600;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  
   }
 `;
 
@@ -38,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal({bool, handleClose, reactQuillValue}) {
+export default function TransitionsModal({bool, handleClose, reactQuillValue, holder,value, funcUpdate}) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [promptText, setPromptText] = React.useState("")
@@ -69,16 +91,22 @@ export default function TransitionsModal({bool, handleClose, reactQuillValue}) {
         <Fade in={bool}>
           <div className={classes.paper}>
           <QuickNotes />
-            <Prompt />
-          {/* 
+            {/* <Prompt /> */}
 
             <ReactQuillStyles>
+          <div className="modalPrompt">
+            <TextareaAutosize
+            placeholder = {holder}
+            value = {value}
+            
+            />
               <ReactQuill
               theme = {"snow"}
               value = {reactQuillValue}
-              onChange = {(target) => setPromptText(target.value)}
+              onChange = {funcUpdate}
               />
-            </ReactQuillStyles> */}
+          </div>
+            </ReactQuillStyles>
           </div>
         </Fade>
       </Modal>

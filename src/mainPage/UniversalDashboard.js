@@ -47,6 +47,7 @@ import QuickNotes from "./QuickSelfReflection/QuickNotes";
 import CryptoJS from "crypto-js";
 import CryptoAES from "crypto-js/aes";
 import Prompt from "./writing_prompt/Prompt";
+import TemporaryDrawer from "./writing_prompt/SideDrawer";
 
 export default function MainDashboard() {
   const [documents, setDocuments] = useState([]);
@@ -85,6 +86,7 @@ export default function MainDashboard() {
 
   const [open, setOpen] = React.useState(false);
   const [greeting, setGreeting] = useState("");
+  const [right,setRight] = useState(false)
 
   const handleOpen = () => {
     setOpen(true);
@@ -115,7 +117,7 @@ export default function MainDashboard() {
     <>
       <div className="universal">
         <div className="universal-dashboard">
-          {/* <LeftColumn /> */}
+          <LeftColumn />
 
           <ModalAuth open={open} close={handleClose} />
 
@@ -124,6 +126,10 @@ export default function MainDashboard() {
           <div className="journal-content">
             <div className="journal-inner-content">
               <div className="Overview">Overview</div>
+
+              {/* <button onClick = {() => setRight(!right)}>Press me</button> */}
+
+
               <div className="top-column">
                 <div className="greeting">
                   {greeting}, {user?.displayName}!

@@ -14,6 +14,14 @@ import { db, firebase } from "../../firebase.prod";
 import styles from "../../editor/styles";
 import Profile from "../profile/Profile";
 
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import {Dropdown} from 'react-bootstrap'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const Prompter = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,7 +36,7 @@ const Prompter = styled.div`
 
   .react-quill-prompter {
     background-color: white !important;
-    height: 100% !important;
+    max-height: 145px !important;
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
   }
@@ -47,6 +55,20 @@ const Prompter = styled.div`
     font-weight: 600;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+  }
+
+  .promptButtons {
+    display: flex;
+  }
+
+  .btn-primary {
+    background-color:white !important;
+    border:none !important;
+    color:black !important;
+  }
+
+  .dropdown-toggle::after {
+    display:none;
   }
 `;
 
@@ -78,27 +100,45 @@ class Prompt extends React.Component {
   render() {
     return (
       <>
+
+
+
         <Prompter>
           <div className="generator">
             <div className="innerGeneratorContent">
               {this.state.random}
-              <div>
+              <div className="promptButtons">
                 <button className="buttonPrompter" onClick={this.handleClick}>
                   <RefreshIcon />
                 </button>
-                <button onClick={() => this.setState({ expand: true })}>
-                  <AspectRatioIcon />
+                <button
+                  className="buttonPrompter"
+                  
+                >
+
+                  <Dropdown>
+          <Dropdown.Toggle>
+
+                  <MoreVertIcon />
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item href="#/action-2"><AddCircleOutlineIcon />New</Dropdown.Item>
+            <Dropdown.Item onClick={() => this.setState({ expand: true })}><AspectRatioIcon />Expand</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
                 </button>
               </div>
             </div>
           </div>
-          <textarea
+          <TextareaAutosize
             type="text"
-            placeholder="Title here"
-            maxlength="70"
-            value={this.state.random}
+            placeholder="Paste prompt here"
+            value={this.state.title ? this.state.title : ""}
             onChange={(e) => this.updateTitle(e.target.value)}
-          ></textarea>
+            minRows={3}
+            maxRows={20}
+          />
 
           <ReactQuill
             className="react-quill-prompter"
@@ -115,6 +155,9 @@ class Prompt extends React.Component {
             bool={this.state.expand}
             handleClose={this.handleModalClose}
             reactQuillValue={this.state.writingPrompt}
+            holder={"Paste prompt here"}
+            value={this.state.title ? this.state.title : ""}
+            funcUpdate={this.updatePrompt}
           />
         )}
       </>
@@ -132,6 +175,7 @@ class Prompt extends React.Component {
               const data = _doc.data();
               data["id"] = _doc.id;
               this.setState({ writingPrompt: data["writingPrompt"] });
+              this.setState({ title: data["title"] });
               const timestamp = data["timestamp"];
               this.setState({ id: _doc.id });
               return data;
@@ -151,7 +195,7 @@ class Prompt extends React.Component {
 
   updateTitle = async (txt) => {
     await this.setState({
-      title: this.state.random,
+      title: txt,
     });
 
     console.log(this.state.title);
@@ -160,7 +204,7 @@ class Prompt extends React.Component {
   update = debounce(() => {
     this.noteUpdate(this.state.id, {
       writingPrompt: this.state.writingPrompt,
-      title: this.state.random,
+      title: this.state.title,
     });
     console.log("title", this.state.title);
   }, 1500);
