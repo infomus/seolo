@@ -2,7 +2,6 @@ const styles = theme => ({
     titleContainer : {
       display:'flex',
       justifyContent:'space-between',
-      marginTop:'-16px'
     },
     root: {
       backgroundColor: theme.palette.background.paper,
@@ -13,7 +12,6 @@ const styles = theme => ({
       boxShadow: '0px 0px 2px black'
     },
     titleInput: {
-      height: '50px',
       flex:'1',
       border: 'none',
       padding: '5px',

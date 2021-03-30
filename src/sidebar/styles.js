@@ -18,7 +18,7 @@ const styles = theme => ({
     },
     newNoteBtn: {
       width: '100%',
-      height: '60px',
+      height: '59.5px',
       borderBottom: '1px solid black',
       borderRadius: '0px',
       backgroundColor: '#425f90',

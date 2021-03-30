@@ -36,7 +36,8 @@ const Prompter = styled.div`
 
   .react-quill-prompter {
     background-color: white !important;
-    max-height: 145px !important;
+    min-height:190px !important;
+    max-height: 190px !important;
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
   }
@@ -77,7 +78,7 @@ class Prompt extends React.Component {
     super();
 
     this.state = {
-      random: "😄 Writing prompt to give you some inspiration 😄",
+      random: "😄 100+ writing prompt to give you some inspiration 😄",
       expand: false,
       prompts: "",
       writingPrompt: "",
@@ -133,7 +134,7 @@ class Prompt extends React.Component {
           </div>
           <TextareaAutosize
             type="text"
-            placeholder="Paste prompt here"
+            placeholder="Paste your prompt here & use the pad on the left to jot some ideas down!"
             value={this.state.title ? this.state.title : ""}
             onChange={(e) => this.updateTitle(e.target.value)}
             minRows={3}

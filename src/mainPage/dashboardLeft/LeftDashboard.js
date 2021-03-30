@@ -22,7 +22,7 @@ export default function LeftColumn() {
         <div className="left-column-icons">
           <div className="icons">
             <IconButton>
-            <MouseOverPopover name = 'infoIcon' Icon = {InfoIcon} text = 'Shortcuts' className = 'PopHover' />
+            <MouseOverPopover name = 'infoIcon' Icon = {InfoIcon} text = 'All your work is auto-saved!' className = 'PopHover' />
               
             </IconButton>
           </div>
