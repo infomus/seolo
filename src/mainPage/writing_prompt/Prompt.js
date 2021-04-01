@@ -8,7 +8,7 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 import "../styles/UniversalDashboard.css";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
 import TransitionsModal from "../modal/ModalReactQuill";
-import { debounce } from "@material-ui/core";
+import { Button, debounce } from "@material-ui/core";
 import { db, firebase } from "../../firebase.prod";
 
 import styles from "../../editor/styles";
@@ -16,11 +16,26 @@ import Profile from "../profile/Profile";
 
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import {Dropdown} from 'react-bootstrap'
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+// import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+
+import { Dropdown } from "react-bootstrap";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import SwipeableTemporaryDrawer from "./SideDrawer";
+import FolderOpenIcon from "@material-ui/icons/FolderOpen";
+
+//-----------------------------------------------------------
+
+import { connect, useDispatch, useSelector } from "react-redux";
+import {
+  closedToggle,
+  openToggle,
+  selectToggleIsOpen,
+} from "../../features/toggleSlice";
+import { bindActionCreators } from "redux";
 
 const Prompter = styled.div`
   display: flex;
@@ -36,7 +51,7 @@ const Prompter = styled.div`
 
   .react-quill-prompter {
     background-color: white !important;
-    min-height:190px !important;
+    min-height: 168px !important;
     max-height: 190px !important;
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
@@ -60,27 +75,68 @@ const Prompter = styled.div`
 
   .promptButtons {
     display: flex;
+    flex-direction: column;
   }
 
   .btn-primary {
-    background-color:white !important;
-    border:none !important;
-    color:black !important;
+    background-color: white !important;
+    border: none !important;
+    color: black !important;
+  }
+
+  .buttonPrompter {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .dropdown-item {
+    display:flex;
+    align-items:center;
   }
 
   .dropdown-toggle::after {
-    display:none;
+    display: none;
   }
 `;
+
+function ButtonDispatch() {
+  const dispatch = useDispatch();
+
+  const selectedToggle = useSelector(selectToggleIsOpen);
+
+  const handlePopover = () => {
+    dispatch(openToggle(true));
+    console.log(selectedToggle)
+  };
+
+  return (
+    <>
+      <Dropdown.Item  onClick={handlePopover}>
+        <FolderOpenIcon />
+        < SwipeableTemporaryDrawer />
+
+      </Dropdown.Item>
+    </>
+  );
+}
+
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators(
+    { selectToggleIsOpen: selectToggleIsOpen },
+    dispatch
+  );
+}
 
 class Prompt extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      random: "😄 100+ writing prompt to give you some inspiration 😄",
+      random: "😄 100+ writing prompts to give you some inspiration 😄",
       expand: false,
-      prompts: "",
+      selectedPrompt: null,
+      selectedPromptIndex: null,
+      prompts: null,
       writingPrompt: "",
       title: "",
       id: "",
@@ -101,9 +157,6 @@ class Prompt extends React.Component {
   render() {
     return (
       <>
-
-
-
         <Prompter>
           <div className="generator">
             <div className="innerGeneratorContent">
@@ -112,22 +165,27 @@ class Prompt extends React.Component {
                 <button className="buttonPrompter" onClick={this.handleClick}>
                   <RefreshIcon />
                 </button>
-                <button
-                  className="buttonPrompter"
-                  
-                >
-
+                <button className="buttonPrompter">
                   <Dropdown>
-          <Dropdown.Toggle>
+                    <Dropdown.Toggle>
+                      <MoreHorizIcon />
+                    </Dropdown.Toggle>
 
-                  <MoreVertIcon />
-          </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={this.newPrompt}>
+                        <AddCircleOutlineIcon />
+                        New
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => this.setState({ expand: true })}
+                      >
+                        <AspectRatioIcon />
+                        Expand
+                      </Dropdown.Item>
 
-          <Dropdown.Menu>
-            <Dropdown.Item href="#/action-2"><AddCircleOutlineIcon />New</Dropdown.Item>
-            <Dropdown.Item onClick={() => this.setState({ expand: true })}><AspectRatioIcon />Expand</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+                      <ButtonDispatch />
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </button>
               </div>
             </div>
@@ -137,8 +195,6 @@ class Prompt extends React.Component {
             placeholder="Paste your prompt here & use the pad on the left to jot some ideas down!"
             value={this.state.title ? this.state.title : ""}
             onChange={(e) => this.updateTitle(e.target.value)}
-            minRows={3}
-            maxRows={20}
           />
 
           <ReactQuill
@@ -175,13 +231,12 @@ class Prompt extends React.Component {
             const writingPrompt = serverUpdate.docs.map((_doc) => {
               const data = _doc.data();
               data["id"] = _doc.id;
-              this.setState({ writingPrompt: data["writingPrompt"] });
-              this.setState({ title: data["title"] });
               const timestamp = data["timestamp"];
               this.setState({ id: _doc.id });
               return data;
             });
-
+            this.setState({ prompts: writingPrompt });
+            console.log("prompts", this.state.prompts);
             this.setState({ prompts: writingPrompt });
           });
       }
@@ -207,8 +262,7 @@ class Prompt extends React.Component {
       writingPrompt: this.state.writingPrompt,
       title: this.state.title,
     });
-    console.log("title", this.state.title);
-  }, 1500);
+  }, 2500);
 
   noteUpdate = (id, noteObj) => {
     db.collection("users")
@@ -220,9 +274,41 @@ class Prompt extends React.Component {
         writingPrompt: noteObj.writingPrompt,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
+  };
 
-    console.log(noteObj.writingPrompt);
+  newPrompt = async () => {
+    const promptNote = {
+      title: "",
+      writingPrompt: "",
+    };
+
+    const newPromptFromDB = await db // we await the firebase call. When firebase is done it will set
+      //newPromptFromDB to the firebase call
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("WritingPrompt")
+      .add({
+        title: promptNote.title,
+        writingPrompt: promptNote.writingPrompt,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+    const newPromptID = newPromptFromDB.id;
+    await this.setState({ prompts: [...this.state.writingPrompt, promptNote] });
+    const newPromptIndex = this.state.prompts.indexOf(
+      // the indexOf() method returns the first index at which a given element can be found
+      // in the arrayconst beasts = ['ant', 'bison', 'camel', 'duck', 'bison'];
+      //console.log(beasts.indexOf('bison'));  expected output: 1
+      this.state.prompts.filter((_prompt) => _prompt.id === newPromptID)[0]
+      // because the filter returns an array but in this case it returns one item so we immidiately set it to index 0
+    );
+    this.setState({
+      selectedPrompt: this.state.writingPrompt[newPromptIndex],
+      selectedPromptIndex: newPromptIndex,
+    });
   };
 }
+
+connect(matchDispatchToProps)(Prompt);
 
 export default Prompt;

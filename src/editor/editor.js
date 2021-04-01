@@ -27,41 +27,6 @@ import CryptoAES from 'crypto-js/aes'
 // console.log(originalText)
 
 
-function ButtonDispatch() {
-
-  const dispatch = useDispatch();
-
-  const selectedToggle = useSelector(selectToggleIsOpen)
-
-  const handlePopover = () => {
-    dispatch(openToggle(true))
-
-    setTimeout(() => {
-
-      dispatch(closedToggle(false))
-    }, 1500)
-  }
-
-  
-return(
-  <>
-  <Button onClick = {handlePopover} variant="contained" color="secondary">
-  Save
-</Button>
-
-  <SimpleSnackbar />
-  </>
-)
-}
-
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators({selectToggleIsOpen: selectToggleIsOpen}, dispatch)
-}
-
-
-
-
-
 class EditorComponent extends React.Component {
   constructor() {
     super();
@@ -149,7 +114,6 @@ class EditorComponent extends React.Component {
           ></input>
 
         <div className = 'toggleButton'>
-          <ButtonDispatch />
         </div>
         </div>
         {this.state.saving}
@@ -202,7 +166,6 @@ class EditorComponent extends React.Component {
   };
 }
 
-connect(matchDispatchToProps)(EditorComponent)
 
 export default withStyles(styles)(EditorComponent); // The withStyles takes an argument which is styles. withStyles returns another function and we invoke that function with our editor component
 // We will be able to access those classes from the styles.js

@@ -610,9 +610,7 @@
   background-color: white;
 }
 
-.MuiPaper-root {
-  margin: 10px 0px !important;
-}
+
 
 .journal-column::-webkit-scrollbar, .journal-content::-webkit-scrollbar {
   width: 12px;               /* width of the entire scrollbar */

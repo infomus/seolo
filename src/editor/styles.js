@@ -14,7 +14,7 @@ const styles = theme => ({
     titleInput: {
       flex:'1',
       border: 'none',
-      padding: '5px',
+      padding: '11.7px',
       fontSize: '24px',
       width: 'calc(100% - 300px)',
       backgroundColor: '#29487d',
