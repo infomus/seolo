@@ -103,6 +103,10 @@ const Prompter = styled.div`
   .dropdown-toggle::after {
     display: none;
   }
+
+  .dropdown-toggle {
+    padding:0;
+  }
 `;
 
 class Prompt extends React.Component {
@@ -110,7 +114,7 @@ class Prompt extends React.Component {
     super();
 
     this.state = {
-      random: "😄 100+ writing prompts to give you some inspiration 😄",
+      random: "100+ writing prompts to give you some inspiration",
       expand: false,
       selectedPrompt: null,
       selectedPromptIndex: null,
