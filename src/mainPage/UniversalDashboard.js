@@ -47,7 +47,6 @@ import QuickNotes from "./QuickSelfReflection/QuickNotes";
 import CryptoJS from "crypto-js";
 import CryptoAES from "crypto-js/aes";
 import Prompt from "./writing_prompt/Prompt";
-import TemporaryDrawer from "./writing_prompt/SideDrawer";
 
 export default function MainDashboard() {
   const [documents, setDocuments] = useState([]);

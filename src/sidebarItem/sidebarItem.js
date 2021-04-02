@@ -13,10 +13,6 @@ import { firebase,db } from "../firebase.prod";
 
 
 class sidebarItemComponent extends React.Component {
-  constructor() {
-    super();
-
-  }
 
   render() {
     const { _index, _note, classes, selectedNoteIndex } = this.props;

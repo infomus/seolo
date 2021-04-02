@@ -8,7 +8,13 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 import "../styles/UniversalDashboard.css";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
 import TransitionsModal from "../modal/ModalReactQuill";
-import { Button, debounce } from "@material-ui/core";
+import {
+  Button,
+  debounce,
+  Divider,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core";
 import { db, firebase } from "../../firebase.prod";
 
 import styles from "../../editor/styles";
@@ -22,20 +28,13 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 import { Dropdown } from "react-bootstrap";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import CheckIcon from "@material-ui/icons/Check";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import SwipeableTemporaryDrawer from "./SideDrawer";
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";
-
+import Drawer from "@material-ui/core/Drawer";
+import { removeHTMLTags } from "../../helpers/helpers";
 //-----------------------------------------------------------
-
-import { connect, useDispatch, useSelector } from "react-redux";
-import {
-  closedToggle,
-  openToggle,
-  selectToggleIsOpen,
-} from "../../features/toggleSlice";
-import { bindActionCreators } from "redux";
 
 const Prompter = styled.div`
   display: flex;
@@ -78,54 +77,33 @@ const Prompter = styled.div`
     flex-direction: column;
   }
 
-  .btn-primary {
+  .btn-primary,
+  .MuiButton-label {
     background-color: white !important;
     border: none !important;
     color: black !important;
   }
 
-  .buttonPrompter {
+  .MuiButton-label:hover {
+    background-color: #e9ecef !important;
+    transform: none !important;
+  }
+
+  .buttonPrompter,
+  .MuiButtonBase-root {
     margin: 0px;
     padding: 0px;
   }
 
   .dropdown-item {
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
   }
 
   .dropdown-toggle::after {
     display: none;
   }
 `;
-
-function ButtonDispatch() {
-  const dispatch = useDispatch();
-
-  const selectedToggle = useSelector(selectToggleIsOpen);
-
-  const handlePopover = () => {
-    dispatch(openToggle(true));
-    console.log(selectedToggle)
-  };
-
-  return (
-    <>
-      <Dropdown.Item  onClick={handlePopover}>
-        <FolderOpenIcon />
-        < SwipeableTemporaryDrawer />
-
-      </Dropdown.Item>
-    </>
-  );
-}
-
-function matchDispatchToProps(dispatch) {
-  return bindActionCreators(
-    { selectToggleIsOpen: selectToggleIsOpen },
-    dispatch
-  );
-}
 
 class Prompt extends React.Component {
   constructor() {
@@ -136,10 +114,13 @@ class Prompt extends React.Component {
       expand: false,
       selectedPrompt: null,
       selectedPromptIndex: null,
-      prompts: null,
+      prompts: [],
       writingPrompt: "",
       title: "",
       id: "",
+      idPrompt: "",
+      open: false,
+      writingDocs: [],
     };
   }
 
@@ -154,6 +135,46 @@ class Prompt extends React.Component {
     this.setState({ expand: false });
   };
 
+  toggleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  toggleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
+  componentDidMount = async () => {
+    await firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        db.collection("users")
+          .doc(firebase.auth().currentUser.uid)
+          .collection("WritingPrompt")
+          .onSnapshot((serverUpdate) => {
+            const writingPrompt = serverUpdate.docs.map((_doc) => {
+              const data = _doc.data();
+              data["id"] = _doc.id;
+              const timestamp = data["timestamp"];
+              this.setState({
+                id: _doc.id,
+              });
+              return data;
+            });
+            this.setState({
+              prompts: writingPrompt,
+            });
+          });
+      }
+    });
+  };
+
+  // componentDidUpdate = () => {
+  //   if(this.state.selectedPromptIndex !== this.state.id) {
+
+  //     console.log('they are not the same')
+
+  //   }
+  // }
+
   render() {
     return (
       <>
@@ -161,38 +182,49 @@ class Prompt extends React.Component {
           <div className="generator">
             <div className="innerGeneratorContent">
               {this.state.random}
-              <div className="promptButtons">
+              <div className="Allbuttons">
                 <button className="buttonPrompter" onClick={this.handleClick}>
                   <RefreshIcon />
                 </button>
-                <button className="buttonPrompter">
-                  <Dropdown>
-                    <Dropdown.Toggle>
-                      <MoreHorizIcon />
-                    </Dropdown.Toggle>
+                <div
+                  className="checkMarkForPrompt"
+                  onClick={this.selectQuestion}
+                >
+                  <CheckIcon />
+                </div>
+                <div className="promptButtons">
+                  <button className="buttonPrompter">
+                    <Dropdown>
+                      <Dropdown.Toggle>
+                        <MoreHorizIcon />
+                      </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                      <Dropdown.Item onClick={this.newPrompt}>
-                        <AddCircleOutlineIcon />
-                        New
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => this.setState({ expand: true })}
-                      >
-                        <AspectRatioIcon />
-                        Expand
-                      </Dropdown.Item>
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={this.newPrompt}>
+                          <AddCircleOutlineIcon />
+                          New
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => this.setState({ expand: true })}
+                        >
+                          <AspectRatioIcon />
+                          Expand
+                        </Dropdown.Item>
 
-                      <ButtonDispatch />
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </button>
+                        <Dropdown.Item onClick={this.toggleDrawerOpen}>
+                          <FolderOpenIcon />
+                          Folder
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           <TextareaAutosize
             type="text"
-            placeholder="Paste your prompt here & use the pad on the left to jot some ideas down!"
+            placeholder="Use the pad on the left to jot down some ideas!"
             value={this.state.title ? this.state.title : ""}
             onChange={(e) => this.updateTitle(e.target.value)}
           />
@@ -217,31 +249,42 @@ class Prompt extends React.Component {
             funcUpdate={this.updatePrompt}
           />
         )}
+
+        <div>
+          <Drawer
+            anchor={"left"}
+            open={this.state.open}
+            onClose={this.toggleDrawerClose}
+          >
+            {this.state.prompts.map((_prompt, _index) => {
+              return (
+                <div
+                  key={_index}
+                  onClick={() => this.selectPrompt(_prompt, _index)}
+                >
+                  <ListItem
+                    button
+                    selected={this.state.selectedPromptIndex === _index[0]}
+                    alignItems="flex-start"
+                    onClick={this.toggleDrawerClose}
+                  >
+                    <ListItemText
+                      primary={_prompt.title.substring(0, 20) + "..."}
+                      secondary={
+                        removeHTMLTags(_prompt.writingPrompt.substring(0, 30)) +
+                        "..."
+                      }
+                    ></ListItemText>
+                    <Divider />
+                  </ListItem>
+                </div>
+              );
+            })}
+          </Drawer>
+        </div>
       </>
     );
   }
-
-  componentDidMount = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        db.collection("users")
-          .doc(firebase.auth().currentUser.uid)
-          .collection("WritingPrompt")
-          .onSnapshot((serverUpdate) => {
-            const writingPrompt = serverUpdate.docs.map((_doc) => {
-              const data = _doc.data();
-              data["id"] = _doc.id;
-              const timestamp = data["timestamp"];
-              this.setState({ id: _doc.id });
-              return data;
-            });
-            this.setState({ prompts: writingPrompt });
-            console.log("prompts", this.state.prompts);
-            this.setState({ prompts: writingPrompt });
-          });
-      }
-    });
-  };
 
   updatePrompt = async (val) => {
     await this.setState({ writingPrompt: val });
@@ -254,7 +297,12 @@ class Prompt extends React.Component {
       title: txt,
     });
 
-    console.log(this.state.title);
+    this.update();
+  };
+
+  selectQuestion = async () => {
+    this.setState({ title: this.state.random });
+    this.update();
   };
 
   update = debounce(() => {
@@ -262,7 +310,7 @@ class Prompt extends React.Component {
       writingPrompt: this.state.writingPrompt,
       title: this.state.title,
     });
-  }, 2500);
+  }, 1750);
 
   noteUpdate = (id, noteObj) => {
     db.collection("users")
@@ -274,6 +322,19 @@ class Prompt extends React.Component {
         writingPrompt: noteObj.writingPrompt,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
+
+    console.log("this.state.id", this.state.id);
+  };
+
+  selectPrompt = (prompt, index) => {
+    this.setState({ selectedPromptIndex: index, selectedPrompt: prompt });
+
+    console.log("selectedPromptIndex", this.state.selectedPromptIndex);
+    console.log(
+      "SelectedPromptprompt",
+      this.state.selectedPrompt?.writingPrompt
+    );
+    console.log("Selected", this.state.selectedPrompt?.title);
   };
 
   newPrompt = async () => {
@@ -308,7 +369,5 @@ class Prompt extends React.Component {
     });
   };
 }
-
-connect(matchDispatchToProps)(Prompt);
 
 export default Prompt;
