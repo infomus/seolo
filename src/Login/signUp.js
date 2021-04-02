@@ -97,7 +97,9 @@ export default function SignUp() {
               .doc(currentUser.uid)
               .collection("notes")
               .add({
-                notes: notes,
+                body:'My first journal',
+                title:'My first journal',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
               });
 
               db.collection('users')
@@ -111,7 +113,8 @@ export default function SignUp() {
               .doc(currentUser.uid)
               .collection('WritingPrompt')
               .add({
-                writingPrompt:writingPrompt
+                writingPrompt:'My first prompt',
+                title:'My first prompt'
               })
             history.push(ROUTES.MAIN_DASH);
           })

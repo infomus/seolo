@@ -150,7 +150,7 @@ export default function MainDashboard() {
                       title2="Last edited"
                       name={documents}
                       id={id}
-                      timestamp={timestamp.toDate().toString()}
+                      timestamp={timestamp?.toDate().toString()}
                       title={title}
                       onClick={open}
                       close={handleClose}

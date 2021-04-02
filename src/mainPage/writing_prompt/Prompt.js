@@ -273,9 +273,9 @@ class Prompt extends React.Component {
                     onClick={this.toggleDrawerClose}
                   >
                     <ListItemText
-                      primary={_prompt.title.substring(0, 20) + "..."}
+                      primary={_prompt.title?.substring(0, 20) + "..."}
                       secondary={
-                        removeHTMLTags(_prompt.writingPrompt.substring(0, 30)) +
+                        removeHTMLTags(_prompt.writingPrompt?.substring(0, 30)) +
                         "..."
                       }
                     ></ListItemText>
