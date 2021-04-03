@@ -17,7 +17,6 @@ import {
 } from "@material-ui/core";
 import { db, firebase } from "../../firebase.prod";
 
-import styles from "../../editor/styles";
 import Profile from "../profile/Profile";
 
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
@@ -34,6 +33,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import FolderOpenIcon from "@material-ui/icons/FolderOpen";
 import Drawer from "@material-ui/core/Drawer";
 import { removeHTMLTags } from "../../helpers/helpers";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { withStyles } from "@material-ui/core/styles";
+import styles from "./styles";
+
 //-----------------------------------------------------------
 
 const Prompter = styled.div`
@@ -50,8 +53,8 @@ const Prompter = styled.div`
 
   .react-quill-prompter {
     background-color: white !important;
-    min-height: 168px !important;
-    max-height: 190px !important;
+    min-height: 160px !important;
+    max-height: 160px !important;
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
   }
@@ -105,7 +108,7 @@ const Prompter = styled.div`
   }
 
   .dropdown-toggle {
-    padding:0;
+    padding: 0;
   }
 `;
 
@@ -153,8 +156,9 @@ class Prompt extends React.Component {
         db.collection("users")
           .doc(firebase.auth().currentUser.uid)
           .collection("WritingPrompt")
+          .orderBy("timestamp", "desc")
           .onSnapshot((serverUpdate) => {
-            const writingPrompt = serverUpdate.docs.map((_doc) => {
+            const prompts = serverUpdate.docs.map((_doc) => {
               const data = _doc.data();
               data["id"] = _doc.id;
               const timestamp = data["timestamp"];
@@ -164,22 +168,34 @@ class Prompt extends React.Component {
               return data;
             });
             this.setState({
-              prompts: writingPrompt,
+              prompts: prompts,
             });
+            if(prompts) {
+              this.setState({
+                selectedPrompt:this.state.prompts[0]
+              })
+            }
           });
       }
     });
   };
 
-  // componentDidUpdate = () => {
-  //   if(this.state.selectedPromptIndex !== this.state.id) {
+  componentDidUpdate = async () => {
+    if(this.state.prompts.length > 0) {
 
-  //     console.log('they are not the same')
-
-  //   }
-  // }
+      if(this.state.selectedPrompt?.id !== this.state?.id) {
+        await this.setState({
+          writingPrompt: this.state.selectedPrompt?.writingPrompt,
+          title: this.state.selectedPrompt?.title,
+          id: this.state.selectedPrompt?.id,
+        })
+      }
+    }
+  }
 
   render() {
+    const { classes, _prompt, _index } = this.props;
+
     return (
       <>
         <Prompter>
@@ -208,16 +224,24 @@ class Prompt extends React.Component {
                           <AddCircleOutlineIcon />
                           New
                         </Dropdown.Item>
+
+                        {
+                          (this.state.prompts.length > 0) ?
+                          <>
                         <Dropdown.Item
                           onClick={() => this.setState({ expand: true })}
                         >
                           <AspectRatioIcon />
                           Expand
                         </Dropdown.Item>
+                        </>
+                        : null
+
+                        }
 
                         <Dropdown.Item onClick={this.toggleDrawerOpen}>
                           <FolderOpenIcon />
-                          Folder
+                          {this.state.prompts.length} - Folder
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -226,21 +250,30 @@ class Prompt extends React.Component {
               </div>
             </div>
           </div>
-          <TextareaAutosize
-            type="text"
-            placeholder="Use the pad on the left to jot down some ideas!"
-            value={this.state.title ? this.state.title : ""}
-            onChange={(e) => this.updateTitle(e.target.value)}
-          />
 
-          <ReactQuill
-            className="react-quill-prompter"
-            theme={"bubble"}
-            placeholder={"Your answer..."}
-            onChange={this.updatePrompt}
-            value={this.state.writingPrompt}
-          />
-          {this.state.expand}
+          {
+            (this.state.prompts.length > 0) ?
+<>
+            <TextareaAutosize
+              type="text"
+              placeholder="Use the pad on the left to jot down some ideas!"
+              value={this.state.title ? this.state.title : ""}
+              onChange={(e) => this.updateTitle(e.target.value)}
+            />
+  
+            <ReactQuill
+              className="react-quill-prompter"
+              theme={"bubble"}
+              placeholder={"Your answer..."}
+              onChange={this.updatePrompt}
+              value={this.state.writingPrompt || ""}
+            />
+</>
+            : <div>Create new prompts</div>
+
+          }
+
+
         </Prompter>
 
         {this.state.expand && (
@@ -275,10 +308,15 @@ class Prompt extends React.Component {
                     <ListItemText
                       primary={_prompt.title?.substring(0, 20) + "..."}
                       secondary={
-                        removeHTMLTags(_prompt.writingPrompt?.substring(0, 30)) +
-                        "..."
+                        removeHTMLTags(
+                          _prompt.writingPrompt?.substring(0, 40)
+                        ) + "..."
                       }
                     ></ListItemText>
+                    <DeleteIcon
+                      className={classes.deleteIcon}
+                      onClick={() => this.deletePrompt(_prompt)}
+                    ></DeleteIcon>
                     <Divider />
                   </ListItem>
                 </div>
@@ -291,15 +329,19 @@ class Prompt extends React.Component {
   }
 
   updatePrompt = async (val) => {
-    await this.setState({ writingPrompt: val });
+
+      this.setState({
+        writingPrompt: val,
+      });
 
     this.update();
   };
 
   updateTitle = async (txt) => {
-    await this.setState({
-      title: txt,
-    });
+
+      this.setState({
+        title: txt,
+      });
 
     this.update();
   };
@@ -327,18 +369,10 @@ class Prompt extends React.Component {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
-    console.log("this.state.id", this.state.id);
   };
 
   selectPrompt = (prompt, index) => {
     this.setState({ selectedPromptIndex: index, selectedPrompt: prompt });
-
-    console.log("selectedPromptIndex", this.state.selectedPromptIndex);
-    console.log(
-      "SelectedPromptprompt",
-      this.state.selectedPrompt?.writingPrompt
-    );
-    console.log("Selected", this.state.selectedPrompt?.title);
   };
 
   newPrompt = async () => {
@@ -359,7 +393,7 @@ class Prompt extends React.Component {
       });
 
     const newPromptID = newPromptFromDB.id;
-    await this.setState({ prompts: [...this.state.writingPrompt, promptNote] });
+    await this.setState({ prompts: [...this.state.prompts, promptNote] });
     const newPromptIndex = this.state.prompts.indexOf(
       // the indexOf() method returns the first index at which a given element can be found
       // in the arrayconst beasts = ['ant', 'bison', 'camel', 'duck', 'bison'];
@@ -372,6 +406,32 @@ class Prompt extends React.Component {
       selectedPromptIndex: newPromptIndex,
     });
   };
+
+  deletePrompt = async (prompt) => {
+    if (window.confirm(`Are you sure you want to delete this prompt`)) {
+      const promptIndex = this.state.prompts.indexOf(prompt);
+      await this.setState({
+        prompts: this.state.prompts.filter((_prompt) => _prompt !== prompt),
+      });
+
+      if (this.state.selectedPromptIndex === promptIndex) {
+        this.setState({ selectedPromptIndex: null, selectedPrompt: null });
+      } else {
+        this.state.prompts.length > 1
+          ? this.selectPrompt(
+              this.state.prompts[this.state.selectedPromptIndex - 1],
+              this.state.selectedPromptIndex - 1
+            )
+          : this.setState({ selectedPromptIndex: null, selectedPrompt: null });
+      }
+
+      db.collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("WritingPrompt")
+        .doc(prompt.id)
+        .delete();
+    }
+  };
 }
 
-export default Prompt;
+export default withStyles(styles)(Prompt);
