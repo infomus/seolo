@@ -206,12 +206,16 @@ class Prompt extends React.Component {
                 <button className="buttonPrompter" onClick={this.handleClick}>
                   <RefreshIcon />
                 </button>
+                {(this.state.prompts.length > 0) ? 
                 <div
                   className="checkMarkForPrompt"
                   onClick={this.selectQuestion}
                 >
                   <CheckIcon />
                 </div>
+                : null
+              
+            }
                 <div className="promptButtons">
                   <button className="buttonPrompter">
                     <Dropdown>
@@ -356,7 +360,7 @@ class Prompt extends React.Component {
       writingPrompt: this.state.writingPrompt,
       title: this.state.title,
     });
-  }, 1750);
+  }, 1500);
 
   noteUpdate = (id, noteObj) => {
     db.collection("users")
