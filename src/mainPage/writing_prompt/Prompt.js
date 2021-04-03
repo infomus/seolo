@@ -117,7 +117,7 @@ class Prompt extends React.Component {
     super();
 
     this.state = {
-      random: "100+ writing prompts to give you some inspiration",
+      random: "200+ writing prompts to give you some inspiration",
       expand: false,
       selectedPrompt: null,
       selectedPromptIndex: null,
