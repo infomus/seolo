@@ -73,6 +73,7 @@ const Prompter = styled.div`
     font-weight: 600;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    text-align:center;
   }
 
   .promptButtons {
@@ -82,7 +83,7 @@ const Prompter = styled.div`
 
   .btn-primary,
   .MuiButton-label {
-    background-color: white !important;
+    background-color: #eeeeee !important;
     border: none !important;
     color: black !important;
   }
@@ -109,6 +110,10 @@ const Prompter = styled.div`
 
   .dropdown-toggle {
     padding: 0;
+  }
+
+  .MuiDrawer-paperAnchorLeft {
+    min-width: 250px !important;
   }
 `;
 
@@ -170,10 +175,10 @@ class Prompt extends React.Component {
             this.setState({
               prompts: prompts,
             });
-            if(prompts) {
+            if (prompts) {
               this.setState({
-                selectedPrompt:this.state.prompts[0]
-              })
+                selectedPrompt: this.state.prompts[0],
+              });
             }
           });
       }
@@ -181,17 +186,16 @@ class Prompt extends React.Component {
   };
 
   componentDidUpdate = async () => {
-    if(this.state.prompts.length > 0) {
-
-      if(this.state.selectedPrompt?.id !== this.state?.id) {
+    if (this.state.prompts.length > 0) {
+      if (this.state.selectedPrompt?.id !== this.state?.id) {
         await this.setState({
           writingPrompt: this.state.selectedPrompt?.writingPrompt,
           title: this.state.selectedPrompt?.title,
           id: this.state.selectedPrompt?.id,
-        })
+        });
       }
     }
-  }
+  };
 
   render() {
     const { classes, _prompt, _index } = this.props;
@@ -202,46 +206,45 @@ class Prompt extends React.Component {
           <div className="generator">
             <div className="innerGeneratorContent">
               {this.state.random}
+            </div>
+          </div>
               <div className="Allbuttons">
+                  <button className="buttonPrompter" onClick={this.newPrompt}>
+                    New prompt
+                    <AddCircleOutlineIcon />
+                  </button>
                 <button className="buttonPrompter" onClick={this.handleClick}>
+                  Generate
                   <RefreshIcon />
                 </button>
-                {(this.state.prompts.length > 0) ? 
-                <div
-                  className="checkMarkForPrompt"
-                  onClick={this.selectQuestion}
-                >
-                  <CheckIcon />
-                </div>
-                : null
-              
-            }
-                <div className="promptButtons">
+                {this.state.prompts.length > 0 ? (
+                  <button
+                    className="checkMarkForPrompt buttonPrompter"
+                    onClick={this.selectQuestion}
+                  >
+                    Choose Question
+                    <CheckIcon />
+                  </button>
+                ) : null}
+                <div className="promptButtons ">
                   <button className="buttonPrompter">
                     <Dropdown>
                       <Dropdown.Toggle>
+                        More
                         <MoreHorizIcon />
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
-                        <Dropdown.Item onClick={this.newPrompt}>
-                          <AddCircleOutlineIcon />
-                          New
-                        </Dropdown.Item>
-
-                        {
-                          (this.state.prompts.length > 0) ?
+                        {this.state.prompts.length > 0 ? (
                           <>
-                        <Dropdown.Item
-                          onClick={() => this.setState({ expand: true })}
-                        >
-                          <AspectRatioIcon />
-                          Expand
-                        </Dropdown.Item>
-                        </>
-                        : null
-
-                        }
+                            <Dropdown.Item
+                              onClick={() => this.setState({ expand: true })}
+                            >
+                              <AspectRatioIcon />
+                              Expand
+                            </Dropdown.Item>
+                          </>
+                        ) : null}
 
                         <Dropdown.Item onClick={this.toggleDrawerOpen}>
                           <FolderOpenIcon />
@@ -252,32 +255,27 @@ class Prompt extends React.Component {
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {
-            (this.state.prompts.length > 0) ?
-<>
-            <TextareaAutosize
-              type="text"
-              placeholder="Use the pad on the left to jot down some ideas!"
-              value={this.state.title ? this.state.title : ""}
-              onChange={(e) => this.updateTitle(e.target.value)}
-            />
-  
-            <ReactQuill
-              className="react-quill-prompter"
-              theme={"bubble"}
-              placeholder={"Your answer..."}
-              onChange={this.updatePrompt}
-              value={this.state.writingPrompt || ""}
-            />
-</>
-            : <div>Create new prompts</div>
+          {this.state.prompts.length > 0 ? (
+            <>
+              <TextareaAutosize
+                type="text"
+                placeholder="Use the pad on the left to jot down some ideas!"
+                value={this.state.title ? this.state.title : ""}
+                onChange={(e) => this.updateTitle(e.target.value)}
+              />
 
-          }
-
-
+              <ReactQuill
+                className="react-quill-prompter"
+                theme={"bubble"}
+                placeholder={"Your answer..."}
+                onChange={this.updatePrompt}
+                value={this.state.writingPrompt || ""}
+              />
+            </>
+          ) : (
+            <div className = 'noPrompts'>Click on "New Prompts"</div>
+          )}
         </Prompter>
 
         {this.state.expand && (
@@ -333,19 +331,17 @@ class Prompt extends React.Component {
   }
 
   updatePrompt = async (val) => {
-
-      this.setState({
-        writingPrompt: val,
-      });
+    this.setState({
+      writingPrompt: val,
+    });
 
     this.update();
   };
 
   updateTitle = async (txt) => {
-
-      this.setState({
-        title: txt,
-      });
+    this.setState({
+      title: txt,
+    });
 
     this.update();
   };
@@ -372,7 +368,6 @@ class Prompt extends React.Component {
         writingPrompt: noteObj.writingPrompt,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
-
   };
 
   selectPrompt = (prompt, index) => {

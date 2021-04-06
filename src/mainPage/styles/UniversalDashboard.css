@@ -219,14 +219,14 @@
 }
 
 .innerGeneratorContent {
-  
+  text-align: center;
+  justify-content: center;
   display: flex;
   width: 100%;
-  justify-content: space-between;
   background-color: white;
   border-radius: 20px;
   padding: 10px;
-
+  font-size: 20px;
 }
 .introduction {
   width: 100%;
@@ -646,7 +646,7 @@
 
 .writing-container {
   display: flex;
-  padding-top: 10px;
+  padding-top: 50px;
   border-radius: 20px;
 }
 
@@ -672,7 +672,35 @@
 
 .Allbuttons {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.buttonPrompter > .MuiSvgIcon-root, .dropdown > button  .MuiSvgIcon-root {
+  margin-left: 10px !important;
+}
+
+.noPrompts {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+.Allbuttons > button  {
+  transition: .3s all linear;
+  padding: 10px !important;
+}
+
+.Allbuttons > button:hover, .Allbuttons > .promptButtons > .buttonPrompter > .dropdown > button:hover  {
+  background: white;
+  border-radius: 999px;
+}
+
+.Allbuttons > .promptButtons > .buttonPrompter > .dropdown > button {
+  transition: .3s all linear;
+  padding: 10px !important;
 }
  

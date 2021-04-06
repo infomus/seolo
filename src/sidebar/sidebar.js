@@ -2,8 +2,9 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import List from "@material-ui/core/List";
-import { Divider, Button } from "@material-ui/core";
+import { Divider, Button, Drawer } from "@material-ui/core";
 import SidebarItemComponent from "../sidebarItem/sidebarItem";
+import Profile from "../mainPage/profile/Profile";
 
 class sidebarComponent extends React.Component {
   constructor() {
@@ -12,14 +13,25 @@ class sidebarComponent extends React.Component {
     this.state = {
       addingNote: false,
       title: null,
+      open:false
     };
   }
+
+  toggleDrawerClose = () => {
+    this.setState({ open: false });
+  };
 
   render() {
     const { notes, classes, selectedNoteIndex } = this.props;
     if (notes) {
       return (
-        <>
+        <div className = 'JournalContainer'>
+        {/* <Profile /> */}
+        <Drawer
+        anchor = {"right"}
+        open = {this.state.open}
+        onClose={this.toggleDrawerClose}
+        >
           <div className={classes.sidebarContainer}>
               <Button
                 onClick={this.newNoteBtnClick}
@@ -57,7 +69,10 @@ class sidebarComponent extends React.Component {
               })}
             </List>
           </div>
-        </>
+          </Drawer>
+
+          <button onClick = {() => this.setState({open:true})}>My journals</button>
+        </div>
       );
     } else {
       return (

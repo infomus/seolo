@@ -159,11 +159,8 @@ export default function MainDashboard() {
                   </>
                 ))}
               </div>
-                <div className = 'writing-prompt'>
-                  Writing Prompt
-                </div>
               <div className = 'writing-container'>
-                <QuickNotes />
+                {/* <QuickNotes /> */}
                 <Prompt />
 
               </div>
