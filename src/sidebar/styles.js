@@ -59,6 +59,25 @@ const styles = theme => ({
       textAlign:'center',
       fontSize:'20px',
       fontWeight:'600'
+    },
+    sidebarDashBoardButton: {
+      textAlign:'center',
+      width:'100%',
+      marginTop:'20px'
+    },
+    drawerButton: {
+      width: '100%',
+      padding:'20px',
+      textAlign:'right',
+      cursor:'pointer',
+    },
+    buttonDrawer: {
+      
+    width: 'fit-content',
+    marginLeft: 'auto',
+    padding: '10px',
+    borderRadius: '50%',
+
     }
   });
   

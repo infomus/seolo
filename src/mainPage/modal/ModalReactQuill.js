@@ -16,6 +16,8 @@ const ReactQuillStyles = styled.div`
   height:100%;
   width:100%;
   margin-left:10px;
+  max-width: 720px  !important;
+
 
 
   .quill, .ql-container {

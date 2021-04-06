@@ -99,7 +99,7 @@ class EditorComponent extends React.Component {
 
     
     return (
-      <>
+      <div className = 'JournalingContainer'>
       
         <BorderColorIcon className={classes.editIcon}></BorderColorIcon>
         
@@ -130,9 +130,9 @@ class EditorComponent extends React.Component {
             focus
             
           ></ReactQuill> 
+          
         </div>
-
-      </>
+      </div>
     );
   }
 

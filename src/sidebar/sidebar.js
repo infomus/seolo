@@ -5,6 +5,10 @@ import List from "@material-ui/core/List";
 import { Divider, Button, Drawer } from "@material-ui/core";
 import SidebarItemComponent from "../sidebarItem/sidebarItem";
 import Profile from "../mainPage/profile/Profile";
+import { Link } from "react-router-dom";
+import * as ROUTES from "../constants/routes";
+import DashboardIcon from '@material-ui/icons/Dashboard';
+
 
 class sidebarComponent extends React.Component {
   constructor() {
@@ -13,7 +17,7 @@ class sidebarComponent extends React.Component {
     this.state = {
       addingNote: false,
       title: null,
-      open:false
+      open: false,
     };
   }
 
@@ -25,59 +29,66 @@ class sidebarComponent extends React.Component {
     const { notes, classes, selectedNoteIndex } = this.props;
     if (notes) {
       return (
-        <div className = 'JournalContainer'>
-        {/* <Profile /> */}
-        <Drawer
-        anchor = {"right"}
-        open = {this.state.open}
-        onClose={this.toggleDrawerClose}
-        >
-          <div className={classes.sidebarContainer}>
-              <Button
-                onClick={this.newNoteBtnClick}
-                className={classes.newNoteBtn}
-                >
+        <div className="JournalContainer">
+          {/* <Profile /> */}
+          <Drawer
+            anchor={"right"}
+            open={this.state.open}
+            onClose={this.toggleDrawerClose}
+          >
+            <div className={classes.sidebarContainer}>
+              <Button onClick={this.newNote} className={classes.newNoteBtn}>
                 {this.state.addingNote ? "Cancel" : "New note"}
               </Button>
-            {this.state.addingNote ? ( // If adding new note is true then we will add the option to type in a new note
-              <div>
-                <input
-                  type="text"
-                  className={classes.newNoteInput}
-                  placeholder="Add a new note"
-                  onKeyUp={(e) => this.updateTitle(e.target.value)}
-                  onKeyPress={this.newNote}
-                  maxLength="40"
-                  autoFocus
-                />
+              <div className= {classes.sidebarDashBoardButton}>
+                <Link exact to={ROUTES.MAIN_DASH}>
+                  Go to Dashboard
+                </Link>
               </div>
-            ) : null}
-            <List>
-              {notes.map((_note, _index) => {
-                return (
-                  <div key={_index}>
-                    <SidebarItemComponent
-                      _note={_note}
-                      _index={_index}
-                      selectedNoteIndex={selectedNoteIndex}
-                      selectNote={this.selectNote}
-                      deleteNote={this.deleteNote}
-                    ></SidebarItemComponent>
-                    <Divider></Divider>
-                  </div>
-                );
-              })}
-            </List>
-          </div>
+              {this.state.addingNote ? ( // If adding new note is true then we will add the option to type in a new note
+                <div>
+                  <input
+                    type="text"
+                    className={classes.newNoteInput}
+                    placeholder="Add a new note"
+                    onKeyUp={(e) => this.updateTitle(e.target.value)}
+                    onKeyPress={this.newNote}
+                    maxLength="40"
+                    autoFocus
+                  />
+                </div>
+              ) : null}
+              <List>
+                {notes.map((_note, _index) => {
+                  return (
+                    <div key={_index}>
+                      <SidebarItemComponent
+                        _note={_note}
+                        _index={_index}
+                        selectedNoteIndex={selectedNoteIndex}
+                        selectNote={this.selectNote}
+                        deleteNote={this.deleteNote}
+                      ></SidebarItemComponent>
+                      <Divider></Divider>
+                    </div>
+                  );
+                })}
+              </List>
+            </div>
           </Drawer>
+            <div className = {classes.drawerButton}>
+                <div className = {classes.buttonDrawer}>
 
-          <button onClick = {() => this.setState({open:true})}>My journals</button>
+            <DashboardIcon onClick={() => this.setState({ open: true })} />
+                </div>
+            </div>
+
         </div>
       );
     } else {
       return (
         <div>
-          <div className = {classes.noNote}> Loading...</div>
+          <div className={classes.noNote}> Loading...</div>
         </div>
       );
     }
@@ -95,10 +106,10 @@ class sidebarComponent extends React.Component {
   };
 
   newNote = (event) => {
-    if (event.key === "Enter") {
-      this.props.newNote(this.state.title);
-      this.setState({ title: null, addingNote: false });
-    }
+    // if (event.key === "Enter") {
+    this.props.newNote(this.state.title);
+    this.setState({ title: null, addingNote: false });
+    // }
   };
 
   selectNote = (n, i) => {

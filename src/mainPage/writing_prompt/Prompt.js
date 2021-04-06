@@ -49,6 +49,7 @@ const Prompter = styled.div`
     background-color: white !important;
     border-bottom-left-radius: 20px !important;
     border-bottom-right-radius: 20px !important;
+    max-width:818px !important;
   }
 
   .react-quill-prompter {
@@ -207,7 +208,9 @@ class Prompt extends React.Component {
             <div className="innerGeneratorContent">
               {this.state.random}
             </div>
+          
           </div>
+          {/* <p contenteditable="true"> I am editable</p> */}
               <div className="Allbuttons">
                   <button className="buttonPrompter" onClick={this.newPrompt}>
                     New prompt
@@ -260,7 +263,7 @@ class Prompt extends React.Component {
             <>
               <TextareaAutosize
                 type="text"
-                placeholder="Use the pad on the left to jot down some ideas!"
+                placeholder='Click "generate" to generate a question!'
                 value={this.state.title ? this.state.title : ""}
                 onChange={(e) => this.updateTitle(e.target.value)}
               />
@@ -360,7 +363,7 @@ class Prompt extends React.Component {
 
   noteUpdate = (id, noteObj) => {
     db.collection("users")
-      .doc(firebase.auth().currentUser.uid)
+      .doc(firebase.auth().currentUser?.uid)
       .collection("WritingPrompt")
       .doc(id)
       .update({

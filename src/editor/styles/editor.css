@@ -46,3 +46,14 @@ li {
   font-size: 16px;
   font-family:'nunito';
 }
+
+.JournalingContainer {
+  width: 1100px;
+  margin: 20px auto;
+}
+
+@media all and (max-width:1000px) {
+  .JournalingContainer {
+    width: 100%;
+  }
+}

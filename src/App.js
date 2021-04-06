@@ -51,7 +51,7 @@ export default function App() {
           </ProtectedRoutes> */}
 
           <ProtectedRoutes user={user} path={ROUTES.DASHBOARD}>
-            <Navbar />
+            {/* <Navbar /> */}
             <Dashboard />
           </ProtectedRoutes>
 
